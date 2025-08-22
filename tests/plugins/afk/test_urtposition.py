@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 from types import MethodType
 from textwrap import dedent
 from tests.plugins.afk import *

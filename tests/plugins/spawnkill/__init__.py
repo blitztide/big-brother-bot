@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import unittest2 as unittest
 
 from b3 import TEAM_BLUE, TEAM_RED

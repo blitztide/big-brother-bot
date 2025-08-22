@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import os
 import sys
 import unittest2 as unittest
@@ -41,6 +42,9 @@ from b3.fake import FakeClient
 from b3.parsers.insurgency import InsurgencyParser
 from b3.plugins.admin import AdminPlugin
 from b3 import __file__ as b3_module__file__
+import six
+from six.moves import filter
+from six.moves import map
 
 ADMIN_CONFIG_FILE = os.path.normpath(os.path.join(os.path.dirname(b3_module__file__), "conf/plugin_admin.ini"))
 
@@ -76,7 +80,7 @@ def client_equal(client_a, client_b):
     if client_a is not None and client_b is None:
         return False
     return all(
-        map(lambda x: getattr(client_a, x, None) == getattr(client_b, x, None), ('cid', 'guid', 'name', 'ip', 'ping')))
+        [getattr(client_a, x, None) == getattr(client_b, x, None) for x in ('cid', 'guid', 'name', 'ip', 'ping')])
 
 
 WHATEVER = object()  # sentinel used in InsurgencyTestCase.assert_has_event
@@ -129,7 +133,7 @@ class InsurgencyTestCase(unittest.TestCase):
         """
         assert that self.evt_queue contains at least one event for the given type that has the given characteristics.
         """
-        assert isinstance(event_type, basestring)
+        assert isinstance(event_type, six.string_types)
         expected_event = self.parser.getEvent(event_type, data, client, target)
 
         if not len(self.evt_queue):
@@ -151,13 +155,13 @@ class InsurgencyTestCase(unittest.TestCase):
                         and (client_equal(expected_event.target, evt.target) or target == WHATEVER):
                     return
 
-            self.fail("expecting event %s. Got instead: %s" % (expected_event, map(str, self.evt_queue)))
+            self.fail("expecting event %s. Got instead: %s" % (expected_event, list(map(str, self.evt_queue))))
 
     def assert_has_not_event(self, event_type, data=None, client=None, target=None):
         """
         assert that self.evt_queue does not contain at least one event for the given type that has the given characteristics.
         """
-        assert isinstance(event_type, basestring)
+        assert isinstance(event_type, six.string_types)
         unexpected_event = self.parser.getEvent(event_type, data, client, target)
 
         if not len(self.evt_queue):
@@ -172,7 +176,7 @@ class InsurgencyTestCase(unittest.TestCase):
                 )
 
             if any(map(event_match, self.evt_queue)):
-                self.fail("not expecting event %s" % (filter(event_match, self.evt_queue)))
+                self.fail("not expecting event %s" % (list(filter(event_match, self.evt_queue))))
 
     def output_write(self, *args, **kwargs):
         """

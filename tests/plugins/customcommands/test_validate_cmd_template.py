@@ -23,6 +23,7 @@
 # ################################################################### #
 
 
+from __future__ import absolute_import
 from mock import Mock
 from unittest2 import TestCase
 from b3.config import CfgConfigParser
@@ -38,7 +39,7 @@ class Test_validate_cmd_template(TestCase):
     def test_nominal(self):
         try:
             self.p._validate_cmd_template("cookie")
-        except (AssertionError, ValueError), err:
+        except (AssertionError, ValueError) as err:
             self.fail("expecting no error, got %r" % err)
 
     def test_None(self):

@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import b3
 import logging
 import unittest2 as unittest
@@ -33,6 +34,8 @@ from b3.config import XmlConfigParser
 from b3.events import Event
 from b3.fake import FakeClient
 from b3.parsers.iourt41 import Iourt41Parser
+import six
+from six.moves import map
 
 log = logging.getLogger("test")
 log.setLevel(logging.INFO)
@@ -62,7 +65,7 @@ class Iourt41TestCase(unittest.TestCase):
         self.output_mock = mock()
         # simulate game server actions
         def write(*args, **kwargs):
-            pretty_args = map(repr, args) + ["%s=%s" % (k, v) for k, v in kwargs.iteritems()]
+            pretty_args = list(map(repr, args)) + ["%s=%s" % (k, v) for k, v in six.iteritems(kwargs)]
             log.info("write(%s)" % ', '.join(pretty_args))
             return self.output_mock.write(*args, **kwargs)
         self.console.write = write
@@ -81,7 +84,7 @@ class Iourt41TestCase(unittest.TestCase):
             assert queueEvent.called, "No event was fired"
             args = queueEvent.call_args
 
-        if type(event_type) is basestring:
+        if type(event_type) is six.string_types:
             event_type_name = event_type
         else:
             event_type_name = self.console.getEventName(event_type)

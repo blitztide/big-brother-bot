@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import logging
 import unittest2 as unittest
 from mock import Mock, patch
@@ -30,6 +31,8 @@ from b3.clients import Client
 from b3.parsers.arma3 import Arma3Parser
 from b3.config import XmlConfigParser
 from tests import logging_disabled
+import six
+from six.moves import map
 
 ANY = object()
 
@@ -99,7 +102,7 @@ class EventParsingTestCase(Arma3TestCase):
         """
         assert that self.evt_queue contains at least one event for the given type that has the given characteristics.
         """
-        assert isinstance(event_type, basestring)
+        assert isinstance(event_type, six.string_types)
 
         def assert_event_equals(expected_event, actual_event):
             if expected_event is None:
@@ -125,7 +128,7 @@ class EventParsingTestCase(Arma3TestCase):
                     return
                 except AssertionError:
                     pass
-            self.fail("expecting event %s. Got instead: %s" % (expected_event, map(str, self.evt_queue)))
+            self.fail("expecting event %s. Got instead: %s" % (expected_event, list(map(str, self.evt_queue))))
 
 
     ################################################################################################################

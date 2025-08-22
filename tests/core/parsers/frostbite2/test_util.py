@@ -22,6 +22,8 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
+from __future__ import print_function
 import unittest2 as unittest
 from b3.parsers.frostbite2.util import BanlistContent, BanlistContentError, PlayerInfoBlock, TeamScoresBlock, MapListBlock, MapListBlockError
 
@@ -65,7 +67,7 @@ class Test_BanlistContent(unittest.TestCase):
         ])
         self.assertEqual(5, len(bloc))
         self.assertEqual(2, len(bloc[1:3]))
-        print bloc[1:3]
+        print(bloc[1:3])
         self.assertEqual('name', bloc[1:3][0]['idType'])
         self.assertEqual('Averell', bloc[1:3][0]['id'])
         self.assertEqual('seconds', bloc[1:3][0]['banType'])
@@ -314,9 +316,9 @@ class Test_MapListBlock_append(unittest.TestCase):
         self.assertEqual(3, mlb1._num_words)
         try:
             mlb1.append(data2)
-        except MapListBlockError, err:
+        except MapListBlockError as err:
             self.assertIn('cannot append data', str(err), "expecting error message to contain 'cannot append data' but got %r instead" % err)
-        except Exception, err:
+        except Exception as err:
             self.fail("expecting MapListBlockError but got %r instead" % err)
         else:
             self.fail("expecting MapListBlockError")

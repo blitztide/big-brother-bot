@@ -25,6 +25,8 @@
 """
 This module provides different utilities specific to the Frostbite engine
 """
+from __future__ import absolute_import
+from six.moves import range
 
 __author__ = 'Courgette'
 __version__ = '1.2'

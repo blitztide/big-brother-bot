@@ -22,7 +22,8 @@
 #                                                                     #
 # ################################################################### #
 
-import thread
+from __future__ import absolute_import
+import six.moves._thread
 import time
 import sys
 
@@ -36,6 +37,7 @@ from b3.clients import Client, Group, ClientVar, ClientBan, ClientTempBan
 from tests import InstantTimer
 from tests.plugins.admin import Admin_TestCase
 from tests.plugins.admin import Admin_functional_test
+from six.moves import range
 
 class Test_misc_cmd(Admin_TestCase):
 

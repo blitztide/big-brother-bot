@@ -23,7 +23,8 @@
 # ################################################################### #
 
 
-import ConfigParser
+from __future__ import absolute_import
+import six.moves.configparser
 
 
 class ConfigFileNotFound(Exception):
@@ -98,5 +99,5 @@ class UpdateError(Exception):
         return repr(self.message)
 
 
-NoOptionError = ConfigParser.NoOptionError
-NoSectionError = ConfigParser.NoSectionError
+NoOptionError = six.moves.configparser.NoOptionError
+NoSectionError = six.moves.configparser.NoSectionError

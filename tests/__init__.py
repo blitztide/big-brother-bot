@@ -22,6 +22,8 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
+from __future__ import print_function
 import logging
 import threading
 import sys
@@ -29,6 +31,8 @@ import sys
 from b3.config import CfgConfigParser
 from b3.config import MainConfig
 from contextlib import contextmanager
+import six
+from six.moves import map
 
 logging.raiseExceptions = False  # get rid of 'No handlers could be found for logger output' message
 import b3.output # do not remove, needed because the module alters some defaults of the logging module
@@ -94,7 +98,7 @@ class B3TestCase(unittest.TestCase):
         self.console.cron.stop()
 
         def myError(msg, *args, **kwargs):
-            print(("ERROR: %s" % msg) % args)
+            print((("ERROR: %s" % msg) % args))
         self.console.error = myError
 
     def tearDown(self):
@@ -117,7 +121,7 @@ class B3TestCase(unittest.TestCase):
                 # WHEN
                 self.client.team = 24
         """
-        if type(event_type) is basestring:
+        if type(event_type) is six.string_types:
             event_type_name = event_type
         else:
             event_type_name = self.console.getEventName(event_type)

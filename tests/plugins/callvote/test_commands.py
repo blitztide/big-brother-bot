@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 from tests.plugins.callvote import CallvoteTestCase
 
 class Test_commands(CallvoteTestCase):

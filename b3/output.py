@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 __author__  = 'ThorN'
 __version__ = '1.7.2'
 
@@ -102,7 +103,7 @@ class OutputHandler(logging.Logger):
         And raises the exception.
         """
         self.log(logging.ERROR, msg, *args, **kwargs) 
-        raise raiseError, msg % args
+        raise raiseError(msg % args)
 
 
 class STDOutLogger:
@@ -178,7 +179,7 @@ def getInstance(logfile='b3.log', loglevel=21, logsize=10485760, log2console=Fal
 
             handler_error = logging.StreamHandler(sys.stderr)
             handler_error.setFormatter(console_formatter)
-            handler_error.setLevel(logging.ERROR)
+            handler_error.setLevel(logging.DEBUG)
 
             __output.addHandler(handler_error)
 

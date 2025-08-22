@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import sys
 
 from tests.plugins.duel import DuelTestCase

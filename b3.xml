@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by BigBrotherBot Config File Generator at http://config.bigbrotherbot.net (15 Aug 2025 - Fri 09:27:11 UTC)-->
+<configuration>
+  <settings name="b3">
+    <set name="bot_name">b3</set>
+    <set name="bot_prefix">^0(^2b3^0)^7:</set>
+    <set name="time_format">%I:%M%p %Z %m/%d/%y</set>
+    <set name="time_zone">CET</set>
+    <set name="log_level">8</set>
+    <set name="logfile">/tmp/b3.log</set>
+    <set name="parser">iourt43</set>
+    <set name="database">sqlite://test.db</set>
+  </settings>
+  <settings name="server">
+    <set name="public_ip">192.168.178.93</set>
+    <set name="port">27960</set>
+    <set name="rcon_ip">192.168.178.93</set>
+    <set name="rcon_port">27960</set>
+    <set name="rcon_password">b3pass</set>
+    <set name="delay">0.33</set>
+    <set name="lines_per_second">50</set>
+    <set name="max_line_length">80</set>
+    <set name="game_log">/home/sysadmin/.q3a/q3ut4/games.log</set>
+    <set name="permban_with_frozensand">no</set>
+    <set name="tempban_with_frozensand">no</set>
+  </settings>
+  <settings name="autodoc">
+    <set name="type">html</set>
+    <set name="maxlevel">100</set>
+    <set name="destination">@conf/b3_doc.html</set>
+  </settings>
+  <settings name="update">
+    <set name="channel">stable</set>
+  </settings>
+  <settings name="messages">
+    <set name="kicked_by">$clientname^7 was kicked by $adminname^7 $reason</set>
+    <set name="kicked">$clientname^7 was kicked $reason</set>
+    <set name="banned_by">$clientname^7 was banned by $adminname^7 $reason</set>
+    <set name="banned">$clientname^7 was banned $reason</set>
+    <set name="temp_banned_by">$clientname^7 was temp banned by $adminname^7 for $banduration^7 $reason</set>
+    <set name="temp_banned">$clientname^7 was temp banned for $banduration^7 $reason</set>
+    <set name="unbanned_by">$clientname^7 was un-banned by $adminname^7 $reason</set>
+    <set name="unbanned">$clientname^7 was un-banned $reason</set>
+  </settings>
+  <settings name="plugins">
+    <set name="external_dir">@b3/extplugins</set>
+  </settings>
+  <plugins>
+    <plugin name="admin" config="@conf/plugin_admin.ini"/>
+  </plugins>
+</configuration>

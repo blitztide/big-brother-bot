@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import operator
 from b3.clients import Client, Group
 from mock import Mock, patch, ANY
@@ -29,6 +30,7 @@ from b3 import TEAM_UNKNOWN, TEAM_RED, TEAM_BLUE
 from b3.clients import Alias, IpAlias
 import unittest2 as unittest
 from tests import B3TestCase
+from six.moves import map
 
 
 class Test_Client(B3TestCase):
@@ -158,9 +160,9 @@ class Test_Client_groups(B3TestCase):
         self.group_superadmin = self.console.storage.getGroup(Group(keyword="superadmin"))
 
     def assertGroups(self, groups):
-        keywords = map(operator.attrgetter('keyword'), groups)
-        self.assertListEqual(keywords, map(operator.attrgetter('keyword'), self.client.groups))
-        self.assertListEqual(keywords, map(operator.attrgetter('keyword'), self.client.getGroups()))
+        keywords = list(map(operator.attrgetter('keyword'), groups))
+        self.assertListEqual(keywords, list(map(operator.attrgetter('keyword'), self.client.groups)))
+        self.assertListEqual(keywords, list(map(operator.attrgetter('keyword'), self.client.getGroups())))
 
     def test_addGroup(self):
         # GIVEN

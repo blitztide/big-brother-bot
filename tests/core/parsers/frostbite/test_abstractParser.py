@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import logging
 import re
 import unittest2 as unittest
@@ -31,6 +32,7 @@ from b3.clients import Client
 from b3.plugins.admin import AdminPlugin
 from b3.config import XmlConfigParser
 from b3.parsers.frostbite.abstractParser import AbstractParser
+from functools import reduce
 
 
 sleep_patcher = None

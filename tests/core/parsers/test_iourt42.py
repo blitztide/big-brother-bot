@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import b3
 import logging
 import unittest2 as unittest
@@ -35,6 +36,8 @@ from b3.fake import FakeClient as original_FakeClient
 from b3.output import VERBOSE2
 from b3.parsers.iourt42 import Iourt42Parser, Iourt42Client
 from tests import logging_disabled
+import six
+from six.moves import map
 
 log = logging.getLogger("test")
 log.setLevel(logging.INFO)
@@ -89,7 +92,7 @@ class Iourt42TestCase(unittest.TestCase):
         self.output_mock = mock()
         # simulate game server actions
         def write(*args, **kwargs):
-            pretty_args = map(repr, args) + ["%s=%s" % (k, v) for k, v in kwargs.iteritems()]
+            pretty_args = list(map(repr, args)) + ["%s=%s" % (k, v) for k, v in six.iteritems(kwargs)]
             log.info("write(%s)" % ', '.join(pretty_args))
             if args == ("gamename",):
                 return r'''"gamename" is:"q3urt42^7"'''
@@ -115,7 +118,7 @@ class Test_log_lines_parsing(Iourt42TestCase):
             assert queueEvent.called, "No event was fired"
             args = queueEvent.call_args
 
-        if type(event_type) is basestring:
+        if type(event_type) is six.string_types:
             event_type_name = event_type
         else:
             event_type_name = self.console.getEventName(event_type)

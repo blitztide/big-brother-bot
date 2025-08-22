@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 
+from __future__ import absolute_import
 from textwrap import dedent
 from mockito import when
 from b3 import TEAM_RED

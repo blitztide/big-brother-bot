@@ -22,9 +22,10 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 import time
 from b3 import update
-import urllib2
+import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
 import unittest2 as unittest
 from mock import patch
 from b3.update import B3version
@@ -196,11 +197,11 @@ class TestCheckUpdate (unittest.TestCase):
                     }
                 }
             """)
-        self.original_urlopen = urllib2.urlopen
-        urllib2.urlopen = urlopen
+        self.original_urlopen = six.moves.urllib.request.urlopen
+        six.moves.urllib.request.urlopen = urlopen
 
     def tearDown(self):
-        urllib2.urlopen = self.original_urlopen
+        six.moves.urllib.request.urlopen = self.original_urlopen
 
     def test_default_channel(self):
         for v in ('1.0', '1.1.1', '1.4', '1.4.2'):

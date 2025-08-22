@@ -22,6 +22,8 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 import time
 
@@ -41,7 +43,7 @@ class Test_events(GeolocationTestCase):
         self.assertEqual(True, hasattr(self.mike, 'location'))
         self.assertIsNotNone(self.mike.location)
         self.assertIsInstance(self.mike.location, Location)
-        print >> sys.stderr, "IP: %s : %r" % (self.mike.ip, self.mike.location)
+        print("IP: %s : %r" % (self.mike.ip, self.mike.location), file=sys.stderr)
 
     def test_event_client_geolocation_failure(self):
         # GIVEN
@@ -51,7 +53,7 @@ class Test_events(GeolocationTestCase):
         time.sleep(6)  # give a chance to the thread to do its job, so retrieve data and create the event
         # THEN
         self.assertIsNone(self.mike.location)
-        print >> sys.stderr, "IP: %s : %r" % (self.mike.ip, self.mike.location)
+        print("IP: %s : %r" % (self.mike.ip, self.mike.location), file=sys.stderr)
 
     def test_event_client_geolocation_success_maxmind(self):
         # GIVEN
@@ -66,7 +68,7 @@ class Test_events(GeolocationTestCase):
         self.assertGreaterEqual(len(self.p._geolocators), 1)
         self.assertIsNotNone(self.mike.location)
         self.assertIsNone(self.mike.location.isp)
-        print >> sys.stderr, "IP: %s : %r" % (self.mike.ip, self.mike.location)
+        print("IP: %s : %r" % (self.mike.ip, self.mike.location), file=sys.stderr)
 
     def test_event_client_geolocation_success_maxmind_using_event_client_update(self):
         # GIVEN
@@ -84,4 +86,4 @@ class Test_events(GeolocationTestCase):
         self.assertEqual(True, hasattr(self.mike, 'location'))
         self.assertIsNotNone(self.mike.location)
         self.assertIsInstance(self.mike.location, Location)
-        print >> sys.stderr, "IP: %s : %r" % (self.mike.ip, self.mike.location)
+        print("IP: %s : %r" % (self.mike.ip, self.mike.location), file=sys.stderr)

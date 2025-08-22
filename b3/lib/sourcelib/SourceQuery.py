@@ -31,8 +31,10 @@
 # TODO:  according to spec, packets may be bzip2 compressed.
 # TODO:: not implemented yet because I couldn't find a server that does this.
 
+from __future__ import absolute_import
 import socket, struct, sys, time
 import StringIO
+from six.moves import range
 
 PACKETSIZE=1400
 
@@ -150,7 +152,7 @@ class SourceQuery(object):
             total = packet.getByte()
             num = packet.getByte()
             splitsize = packet.getShort()
-            result = [0 for x in xrange(total)]
+            result = [0 for x in range(total)]
 
             result[num] = packet.read()
 
@@ -275,7 +277,7 @@ class SourceQuery(object):
 
             # TF2 32player servers may send an incomplete reply
             try:
-                for x in xrange(numplayers):
+                for x in range(numplayers):
                     player = {}
                     player['index'] = packet.getByte()
                     player['name'] = packet.getString()

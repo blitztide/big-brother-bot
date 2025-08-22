@@ -22,6 +22,8 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
+from __future__ import print_function
 import re
 from textwrap import dedent
 import unittest2 as unittest
@@ -36,6 +38,7 @@ from b3.parsers.frostbite2.protocol import CommandFailedError
 from b3.parsers.frostbite2.util import MapListBlock
 from b3.plugins.admin import AdminPlugin
 from tests import logging_disabled
+from six.moves import map
 
 
 sleep_patcher = None
@@ -359,7 +362,7 @@ class Test_bf4_events(BF4TestCase):
         self.assertEqual(1, self.parser.queueEvent.call_count)
 
         event = self.parser.queueEvent.call_args[0][0]
-        print event.client.name
+        print(event.client.name)
         self.assertEqual('Client disconnected', self.parser.getEventName(event.type))
         self.assertEquals('test', event.data)
         self.assertEqual(self.joe, event.client)
@@ -525,7 +528,7 @@ class Test_bf4_maps(BF4TestCase):
 
     def test_each_gamemode_is_valid(self):
         game_modes_found = set()
-        map(game_modes_found.update, GAME_MODES_BY_MAP_ID.values())
+        list(map(game_modes_found.update, list(GAME_MODES_BY_MAP_ID.values())))
         self.assertSetEqual(set(GAME_MODES_NAMES.keys()), game_modes_found)
         for game_mode in game_modes_found:
             self.assertIn(game_mode, GAME_MODES_NAMES)

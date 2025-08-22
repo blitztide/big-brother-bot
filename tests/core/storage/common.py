@@ -22,6 +22,7 @@
 #                                                                     #
 # ################################################################### #
 
+from __future__ import absolute_import
 from b3.clients import Client
 from b3.clients import Alias
 from b3.clients import IpAlias

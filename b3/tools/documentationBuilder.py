@@ -28,18 +28,20 @@ This module will generate a user documentation depending
 on current config
 """
 
+from __future__ import absolute_import
 __author__ = 'Courgette, ozon'
 __version__ = '1.2.9'
 
 import datetime
 import os
 import re
-import StringIO
+from io import StringIO
 import time
+import functools
 
 from b3 import getConfPath, getB3Path, getWritableFilePath
 from b3.functions import splitDSN
-from cgi import escape
+from html import escape
 from ftplib import FTP
 from xml.dom.minidom import Document
 
@@ -272,8 +274,8 @@ class DocBuilder:
             else:
                 return 0
 
-        listCommands = commands.values()
-        listCommands.sort(commands_compare)
+        listCommands = list(commands.values())
+        listCommands = sorted(listCommands, key=functools.cmp_to_key(commands_compare))
         return listCommands
     
     def _write(self, text):
@@ -292,7 +294,7 @@ class DocBuilder:
         elif dsn['protocol'] == 'file':
             path = getWritableFilePath(dsn['path'], True)
             self._console.debug('AUTODOC: writing to %s', path)
-            f = file(path, 'w')
+            f = open(path, 'w')
             f.write(text)
             f.close()
         else:

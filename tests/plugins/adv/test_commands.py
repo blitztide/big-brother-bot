@@ -21,6 +21,7 @@
 #  02110-1301, USA.                                                   #
 #                                                                     #
 # ################################################################### #
+from __future__ import absolute_import
 from b3.fake import FakeClient
 from tests.plugins.adv import AdvTestCase
 

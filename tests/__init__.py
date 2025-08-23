@@ -41,7 +41,7 @@ log.setLevel(logging.WARNING)
 
 from mock import Mock, patch
 import time
-import unittest2 as unittest
+import unittest
 from b3.events import Event
 
 

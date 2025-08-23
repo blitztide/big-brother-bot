@@ -26,7 +26,7 @@ from __future__ import absolute_import
 import time
 from b3 import update
 import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
-import unittest2 as unittest
+import unittest
 from mock import patch
 from b3.update import B3version
 
@@ -176,8 +176,8 @@ class TestCheckUpdate (unittest.TestCase):
             """
             will fake urllib2.urlopen
             """
-            import StringIO
-            return StringIO.StringIO("""
+            from io import StringIO
+            return StringIO("""
                 {
                     "B3": {
                         "channels": {
@@ -258,8 +258,8 @@ class TestCheckUpdate (unittest.TestCase):
     #         """
     #         will fake urllib2.urlopen
     #         """
-    #         import StringIO
-    #         return StringIO.StringIO("""
+    #         from io import StringIO
+    #         return StringIO("""
     #             {
     #                 "B3": {
     #                     "channels": {

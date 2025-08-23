@@ -25,7 +25,7 @@
 from __future__ import absolute_import
 import logging
 import re
-import unittest2 as unittest
+import unittest
 
 from mock import Mock, patch, call
 from b3.clients import Client

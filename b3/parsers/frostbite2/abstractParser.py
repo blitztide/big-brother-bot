@@ -36,7 +36,6 @@ import time
 import string
 import six.moves.queue
 import threading
-import new
 import b3.clients
 import b3.cron
 import b3.events
@@ -1734,9 +1733,9 @@ class AbstractParser(b3.parser.Parser):
                     return
 
         adminplugin = self.getPlugin('admin')
-        adminplugin.parse_map_parameters = new.instancemethod(parse_map_parameters, adminplugin)
+        adminplugin.parse_map_parameters = parse_map_parameters
         command = adminplugin._commands['map']
-        command.func = new.instancemethod(new_cmd_map, adminplugin)
+        command.func = new_cmd_map
         command.help = new_cmd_map.__doc__.strip()
 
 

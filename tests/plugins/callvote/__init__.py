@@ -23,7 +23,7 @@
 # ################################################################### #
 
 from __future__ import absolute_import
-import unittest2
+import unittest
 
 from textwrap import dedent
 from mockito import when
@@ -39,7 +39,7 @@ from b3.plugins.callvote import CallvotePlugin
 from b3.parsers.iourt42 import Iourt42Parser
 from tests import logging_disabled
 
-class CallvoteTestCase(unittest2.TestCase):
+class CallvoteTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

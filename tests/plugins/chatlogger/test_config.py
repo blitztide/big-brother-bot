@@ -26,7 +26,7 @@ from __future__ import absolute_import
 import b3
 import b3.events
 import os
-import unittest2 as unittest
+import unittest
 import sys
 
 from mockito import when

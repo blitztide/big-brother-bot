@@ -26,7 +26,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 import re
 from textwrap import dedent
-import unittest2 as unittest
+import unittest
 from mock import Mock, DEFAULT, patch, call
 from mockito import when, verify
 import b3

@@ -24,7 +24,7 @@
 
 from __future__ import absolute_import
 from mock import Mock, call, patch
-import unittest2 as unittest
+import unittest
 from b3 import TEAM_BLUE, TEAM_RED, TEAM_UNKNOWN, TEAM_SPEC
 from b3.config import XmlConfigParser
 from b3.fake import FakeClient

@@ -287,7 +287,7 @@ class DocBuilder:
             self._console.debug('AUTODOC: uploading to FTP server %s' % dsn['host'])
             ftp = FTP(dsn['host'], dsn['user'], passwd=dsn['password'])
             ftp.cwd(os.path.dirname(dsn['path']))
-            ftpfile = StringIO.StringIO()
+            ftpfile = StringIO()
             ftpfile.write(text)
             ftpfile.seek(0)
             ftp.storbinary('STOR ' + os.path.basename(dsn['path']), ftpfile)

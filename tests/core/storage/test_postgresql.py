@@ -25,8 +25,7 @@
 from __future__ import absolute_import
 import os
 
-import nose
-import unittest2 as unittest
+import unittest
 
 from b3.functions import splitDSN
 from b3.storage.postgresql import PostgresqlStorage
@@ -109,6 +108,4 @@ class Test_PostgreSQL(B3TestCase, StorageAPITest):
         B3TestCase.tearDown(self)
         self.storage.shutdown()
 
-if __name__ == '__main__':
-    nose.main()
 

@@ -25,7 +25,7 @@
 
 from __future__ import absolute_import
 import time
-import unittest2 as unittest
+import unittest
 import threading
 import sys
 

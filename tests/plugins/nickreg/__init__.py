@@ -23,7 +23,7 @@
 # ################################################################### #
 
 from __future__ import absolute_import
-import unittest2
+import unittest
 
 from mockito import when
 from b3.config import XmlConfigParser
@@ -34,7 +34,7 @@ from b3.plugins.nickreg import NickregPlugin
 from textwrap import dedent
 
 
-class NickregTestCase(unittest2.TestCase):
+class NickregTestCase(unittest.TestCase):
 
     def setUp(self):
         # create a FakeConsole parser

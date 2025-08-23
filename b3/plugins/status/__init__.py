@@ -33,7 +33,7 @@ import b3.plugin
 import b3.events
 import os
 import re
-import StringIO
+from io import StringIO
 import time
 
 from b3 import functions
@@ -501,7 +501,7 @@ class StatusPlugin(b3.plugin.Plugin):
         """
         if self._ftpstatus:
             self.debug('uploading XML status to FTP server')
-            ftp_file = StringIO.StringIO()
+            ftp_file = StringIO()
             ftp_file.write(xml)
             ftp_file.seek(0)
             ftp = FTP(self._ftpinfo['host'], self._ftpinfo['user'], passwd=self._ftpinfo['password'])

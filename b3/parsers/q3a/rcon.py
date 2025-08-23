@@ -188,7 +188,7 @@ class Rcon(object):
                 else:
                     try:
                         data = self.readSocket(self.socket, socketTimeout=socketTimeout)
-                        self.console.verbose2('RCON: received %r' % data)
+                        self.console.verbose2('RCON: received %s' % data)
                         return data
                     except Exception as msg:
                         self.console.warning('RCON: error reading: %r', msg)

@@ -23,7 +23,7 @@
 # ################################################################### #
 
 from __future__ import absolute_import
-import unittest2 as unittest
+import unittest
 
 from b3.functions import splitDSN
 from b3.storage import Storage

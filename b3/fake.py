@@ -38,7 +38,7 @@ import b3.parser
 import b3.parsers.punkbuster
 import logging
 import re
-import StringIO
+from io import StringIO
 import sys
 import time
 import traceback
@@ -89,7 +89,7 @@ class FakeConsole(b3.parser.Parser):
         if not self.config.has_option('server', 'punkbuster') or self.config.getboolean('server', 'punkbuster'):
             self.PunkBuster = b3.parsers.punkbuster.PunkBuster(self)
         
-        self.input = StringIO.StringIO()
+        self.input = StringIO()
         self.working = True
     
     def run(self):

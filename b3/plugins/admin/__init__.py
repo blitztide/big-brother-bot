@@ -2404,7 +2404,7 @@ class Command(object):
 
         level = str(level)
         if level.lower() == 'none':
-            self.level = None
+            self.level = (0,100)
         elif level.count('-') == 1:
             level = level.split('-', 1)
             self.level = (int(level[0]), int(level[1]))
@@ -2422,7 +2422,7 @@ class Command(object):
         if self.level is None:
             return False
         else:
-            return int(self.level[0]) <= int(client.maxLevel) <= int(self.level[1])
+            return self.level[0] <= int(client.maxLevel) <= self.level[1]
 
     def execute(self, data, client):
         """

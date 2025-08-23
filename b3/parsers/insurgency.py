@@ -26,7 +26,6 @@ from __future__ import absolute_import
 from __future__ import print_function
 import re
 import time
-import new
 
 from b3 import TEAM_UNKNOWN
 from b3 import TEAM_BLUE
@@ -182,9 +181,9 @@ class InsurgencyParser(Parser):
                 client.message('do you mean : %s ?' % ', '.join(suggestions))
 
         adminPlugin = self.getPlugin('admin')
-        adminPlugin.parse_map_parameters = new.instancemethod(parse_map_parameters, adminPlugin)
+        adminPlugin.parse_map_parameters = parse_map_parameters
         command = adminPlugin._commands['map']
-        command.func = new.instancemethod(new_cmd_map, adminPlugin)
+        command.func = new_cmd_map
         command.help = new_cmd_map.__doc__.strip()
 
     def startup(self):

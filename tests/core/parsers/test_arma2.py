@@ -23,7 +23,7 @@
 # ################################################################### #
 
 from __future__ import absolute_import
-import unittest2 as unittest
+import unittest
 from mock import Mock, patch, call
 from mockito import when
 from b3.fake import FakeClient

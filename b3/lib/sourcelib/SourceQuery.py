@@ -33,7 +33,7 @@
 
 from __future__ import absolute_import
 import socket, struct, sys, time
-import StringIO
+from io import StringIO
 from six.moves import range
 
 PACKETSIZE=1400
@@ -65,7 +65,7 @@ A2S_RULES_REPLY = ord('E')
 CHALLENGE = -1
 S2C_CHALLENGE = ord('A')
 
-class SourceQueryPacket(StringIO.StringIO):
+class SourceQueryPacket(StringIO):
     # putting and getting values
     def putByte(self, val):
         self.write(struct.pack('<B', val))

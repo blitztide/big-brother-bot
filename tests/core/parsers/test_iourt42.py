@@ -25,7 +25,7 @@
 from __future__ import absolute_import
 import b3
 import logging
-import unittest2 as unittest
+import unittest
 
 from mock import Mock, call, patch
 from mockito import mock, when, any as anything

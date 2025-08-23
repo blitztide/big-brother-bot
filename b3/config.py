@@ -344,8 +344,8 @@ class CfgConfigParser(B3ConfigParserMixin, ConfigParser):
         """
         Read the cfg config from a string.
         """
-        import StringIO
-        fp = StringIO.StringIO(cfg_string)
+        from io import StringIO
+        fp = StringIO(cfg_string)
         self.readfp(fp)
         fp.close()
         self.fileName = None

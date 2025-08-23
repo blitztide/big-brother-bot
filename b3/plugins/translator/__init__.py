@@ -53,8 +53,6 @@ import json
 import re
 import sys
 import time
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 try:
     # import the getCmd function

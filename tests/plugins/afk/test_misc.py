@@ -30,7 +30,7 @@ from b3 import TEAM_SPEC
 # This test suite makes sure `check_client` is called appropriately
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def plugin(console):
     p = plugin_maker_ini(console, dedent("""
         [settings]

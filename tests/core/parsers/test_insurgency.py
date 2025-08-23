@@ -25,7 +25,7 @@
 from __future__ import absolute_import
 import os
 import sys
-import unittest2 as unittest
+import unittest
 
 from mock import Mock
 from mock import patch

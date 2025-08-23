@@ -24,7 +24,7 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
-import unittest2 as unittest
+import unittest
 from b3.parsers.frostbite2.util import BanlistContent, BanlistContentError, PlayerInfoBlock, TeamScoresBlock, MapListBlock, MapListBlockError
 
 

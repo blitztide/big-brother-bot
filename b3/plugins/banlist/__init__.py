@@ -36,7 +36,7 @@ import os
 import random
 import re
 import string
-import StringIO
+from io import StringIO
 import six.moves._thread
 import time
 import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
@@ -446,7 +446,7 @@ class Banlist(object):
             result = webFile.read()
             webFile.close()
             if webFile.headers.get('content-encoding', '') == 'gzip':
-                result = StringIO.StringIO(result)
+                result = StringIO(result)
                 gzipper = gzip.GzipFile(fileobj=result)
                 result = gzipper.read()
             self.remote_lastmodified = webFile.headers.get('Last-Modified') 

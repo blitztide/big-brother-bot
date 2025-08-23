@@ -29,7 +29,7 @@ from mock import Mock
 
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def plugin(console):
     p = None
     with logging_disabled():

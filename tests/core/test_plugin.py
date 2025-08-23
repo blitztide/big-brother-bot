@@ -25,7 +25,7 @@
 
 from __future__ import absolute_import
 import b3
-import imp
+import importlib
 import logging
 import os
 from six.moves.configparser import NoOptionError
@@ -399,18 +399,18 @@ class Test_Plugin_requiresParser(B3TestCase):
             {'name': 'admin', 'conf': '@b3/conf/plugin_admin.ini', 'path': None, 'disabled': False},
         ]
 
-        fp, pathname, description = imp.find_module('testplugin1', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule1 = imp.load_module('testplugin1', fp, pathname, description)
+        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin1', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
+        pluginModule1 = importlib.load_module('testplugin1', fp, pathname, description)
         if fp:
             fp.close()
 
-        fp, pathname, description = imp.find_module('testplugin2', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule2 = imp.load_module('testplugin2', fp, pathname, description)
+        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin2', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
+        pluginModule2 = importlib.load_module('testplugin2', fp, pathname, description)
         if fp:
             fp.close()
 
-        fp, pathname, description = imp.find_module('admin', [os.path.join(b3.getB3Path(True), 'plugins')])
-        adminModule = imp.load_module('admin', fp, pathname, description)
+        fp, pathname, description = importlib.machinery.PathFinder().find_spec('admin', [os.path.join(b3.getB3Path(True), 'plugins')])
+        adminModule = importlib.load_module('admin', fp, pathname, description)
         if fp:
             fp.close()
 
@@ -520,18 +520,18 @@ class Test_Plugin_requiresStorage(B3TestCase):
             {'name': 'admin', 'conf': '@b3/conf/plugin_admin.ini', 'path': None, 'disabled': False},
         ]
 
-        fp, pathname, description = imp.find_module('testplugin1', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule1 = imp.load_module('testplugin1', fp, pathname, description)
+        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin1', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
+        pluginModule1 = importlib.load_module('testplugin1', fp, pathname, description)
         if fp:
             fp.close()
 
-        fp, pathname, description = imp.find_module('testplugin3', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule3 = imp.load_module('testplugin3', fp, pathname, description)
+        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin3', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
+        pluginModule3 = importlib.load_module('testplugin3', fp, pathname, description)
         if fp:
             fp.close()
 
-        fp, pathname, description = imp.find_module('admin', [os.path.join(b3.getB3Path(True), 'plugins')])
-        adminModule = imp.load_module('admin', fp, pathname, description)
+        fp, pathname, description = importlib.machinery.PathFinder().find_spec('admin', [os.path.join(b3.getB3Path(True), 'plugins')])
+        adminModule = importlib.load_module('admin', fp, pathname, description)
         if fp:
             fp.close()
 

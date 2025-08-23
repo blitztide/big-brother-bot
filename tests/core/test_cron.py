@@ -24,7 +24,7 @@
 
 from __future__ import absolute_import
 import time
-import unittest2 as unittest
+import unittest
 from mock import sentinel, Mock
 from b3.cron import CronTab, OneTimeCronTab, PluginCronTab, Cron
 from tests import B3TestCase

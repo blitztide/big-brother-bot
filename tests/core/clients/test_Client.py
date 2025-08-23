@@ -28,7 +28,7 @@ from b3.clients import Client, Group
 from mock import Mock, patch, ANY
 from b3 import TEAM_UNKNOWN, TEAM_RED, TEAM_BLUE
 from b3.clients import Alias, IpAlias
-import unittest2 as unittest
+import unittest
 from tests import B3TestCase
 from six.moves import map
 

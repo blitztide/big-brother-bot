@@ -32,7 +32,7 @@ import b3.plugin
 import os.path
 import gzip
 import socket
-import StringIO
+from io import StringIO
 import time
 import threading
 import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
@@ -248,7 +248,7 @@ class Cod7HttpPlugin(b3.plugin.Plugin):
                 try:
                     #self.debug('Content-Encoding: %s' % headers.get('Content-Encoding'))
                     if headers.get('Content-Encoding') == 'gzip':
-                        compressedstream = StringIO.StringIO(remote_log_data)
+                        compressedstream = StringIO(remote_log_data)
                         gzipper = gzip.GzipFile(fileobj=compressedstream)
                         remotelog = gzipper.read()
                     else:

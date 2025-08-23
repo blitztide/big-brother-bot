@@ -24,7 +24,7 @@
 #
 from __future__ import absolute_import
 from textwrap import dedent
-import unittest2 as unittest
+import unittest
 from mock import patch
 from mockito import when
 from b3.clients import Client, Clients

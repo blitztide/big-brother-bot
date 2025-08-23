@@ -26,7 +26,7 @@ from __future__ import absolute_import
 import logging
 from mock import Mock
 from mockito import mock, when, any as anything
-import unittest2 as unittest
+import unittest
 from b3.config import XmlConfigParser
 from b3.parsers.cod import CodParser
 import six

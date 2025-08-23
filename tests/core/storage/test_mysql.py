@@ -25,8 +25,7 @@
 from __future__ import absolute_import
 import os
 
-import nose
-import unittest2 as unittest
+import unittest
 
 from b3.functions import splitDSN
 from b3.storage.mysql import MysqlStorage
@@ -69,7 +68,7 @@ if is_mysql_ready:
         driver.connect(host=MYSQL_TEST_HOST, user=MYSQL_TEST_USER, passwd=MYSQL_TEST_PASSWORD)
     except driver.Error as err:
         is_mysql_ready = False
-        no_mysql_reason = "%s" % err[1]
+        no_mysql_reason = "%s" % err
     except Exception as err:
         is_mysql_ready = False
         no_mysql_reason = "%s" % err
@@ -115,8 +114,5 @@ class Test_MySQL(B3TestCase, StorageAPITest):
              'penalties',
              'data',
             ]), set(self.storage.getTables()))
-
-if __name__ == '__main__':
-    nose.main()
     
     

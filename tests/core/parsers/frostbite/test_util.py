@@ -23,7 +23,7 @@
 # ################################################################### #
 
 from __future__ import absolute_import
-import unittest2 as unittest
+import unittest
 from b3.parsers.frostbite.util import BanlistContent, PlayerInfoBlock
 
 

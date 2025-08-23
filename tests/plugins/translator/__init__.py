@@ -23,14 +23,14 @@
 # ################################################################### #
 
 from __future__ import absolute_import
-import unittest2
+import unittest
 
 from mockito import when
 from b3.config import XmlConfigParser
 from b3.plugins.admin import AdminPlugin
 from tests import logging_disabled
 
-class TranslatorTestCase(unittest2.TestCase):
+class TranslatorTestCase(unittest.TestCase):
 
     def setUp(self):
 

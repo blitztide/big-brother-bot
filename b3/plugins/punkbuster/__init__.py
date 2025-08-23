@@ -29,7 +29,7 @@ __version__ = '1.3'
 import b3
 import b3.plugin
 import b3.cron
-import StringIO
+from io import StringIO
 import ftplib
 import time
 
@@ -129,7 +129,7 @@ class PunkbusterPlugin(b3.plugin.Plugin):
 
         i = 0
         if self._remoteBansFile:
-            f = StringIO.StringIO()
+            f = StringIO()
         else:
             f = open(self._bansFile, 'w')
 

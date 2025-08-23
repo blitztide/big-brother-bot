@@ -25,7 +25,7 @@
 from __future__ import absolute_import
 import logging
 import os
-import unittest2 as unittest
+import unittest
 
 from b3.plugins.admin import AdminPlugin
 from tests import B3TestCase

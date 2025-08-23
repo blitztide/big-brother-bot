@@ -32,7 +32,7 @@ from mock import call, Mock
 from b3 import TEAM_SPEC, TEAM_RED
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def plugin(console):
     with logging_disabled():
         p = plugin_maker_ini(console, dedent("""

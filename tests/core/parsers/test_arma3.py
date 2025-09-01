@@ -33,11 +33,12 @@ from b3.config import XmlConfigParser
 from tests import logging_disabled
 import six
 from six.moves import map
+from tests import B3SimpleTestCase
 
 ANY = object()
 
 
-class Arma3TestCase(unittest.TestCase):
+class Arma3TestCase(B3SimpleTestCase):
     """
     Test case that is suitable for testing Arma3 parser specific features
     """
@@ -196,7 +197,7 @@ class test_sync(EventParsingTestCase):
 
     def test_new_client_with_unverified_guid(self):
         # GIVEN
-        self.assertDictContainsSubset({'clients': 1}, self.parser.storage.getCounts())
+        self.assertEqual(1, self.parser.storage.getCounts()["clients"])
         self.assertNotIn('8', self.parser.clients)
         # WHEN
         when(self.parser.output).write('players').thenReturn('''\
@@ -208,7 +209,7 @@ Players on server:
 ''')
         rv = self.parser.sync()
         # THEN no new client is saved to database
-        self.assertDictContainsSubset({'clients': 1}, self.parser.storage.getCounts())
+        self.assertEqual(1, self.parser.storage.getCounts()["clients"])
         # THEN sync return correct info
         self.assertIn('8', rv)
         client = rv["8"]
@@ -229,7 +230,7 @@ Players on server:
         # GIVEN
         self.parser.routeBattleyeEvent(u'Player #8 Max (111.222.200.50:2304) connected')
         self.parser.routeBattleyeEvent(u'Player #8 Max - GUID: 73c5e50a7860475f0000000000000000 (unverified)')
-        self.assertDictContainsSubset({'clients': 1}, self.parser.storage.getCounts())
+        self.assertEqual(1, self.parser.storage.getCounts()["clients"])
         self.assertIn('8', self.parser.clients)
         self.clear_events()
         # WHEN
@@ -242,7 +243,7 @@ Players on server:
 ''')
         rv = self.parser.sync()
         # THEN no new client is saved to database
-        self.assertDictContainsSubset({'clients': 1}, self.parser.storage.getCounts())
+        self.assertEqual(1, self.parser.storage.getCounts()["clients"])
         # THEN sync return correct info
         self.assertIn('8', rv)
         client = rv["8"]
@@ -265,7 +266,7 @@ Players on server:
         self.parser.routeBattleyeEvent(u'Player #8 Max (111.222.200.50:2304) connected')
         self.parser.routeBattleyeEvent(u'Player #8 Max - GUID: 73c5e50a7860475f0000000000000000 (unverified)')
         self.parser.routeBattleyeEvent(u'Verified GUID (73c5e50a7860475f0000000000000000) of player #8 Max')
-        self.assertDictContainsSubset({'clients': 2}, self.parser.storage.getCounts())
+        self.assertEqual(2, self.parser.storage.getCounts()["clients"])
         self.assertIn('8', self.parser.clients)
         # GIVEN that the player exists in database
         client_from_db = self.parser.storage.getClient(Client(guid="73c5e50a7860475f0000000000000000"))
@@ -284,7 +285,7 @@ Players on server:
 ''')
         rv = self.parser.sync()
         # THEN no new client is saved to database
-        self.assertDictContainsSubset({'clients': 2}, self.parser.storage.getCounts())
+        self.assertEqual(2, self.parser.storage.getCounts()["clients"])
         # THEN sync return correct info
         self.assertIn('8', rv)
         client = rv["8"]

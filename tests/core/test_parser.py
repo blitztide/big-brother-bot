@@ -27,6 +27,7 @@ import logging
 import unittest
 from b3.clients import Client
 from b3.parser import Parser
+from tests import B3SimpleTestCase
 
 
 class DummyParser(Parser):
@@ -38,7 +39,7 @@ class DummyParser(Parser):
         self.log = logging.getLogger("output")
 
 
-class Test_getMessage(unittest.TestCase):
+class Test_getMessage(B3SimpleTestCase):
 
     def setUp(self):
         self.parser = DummyParser()
@@ -75,7 +76,7 @@ class Test_getMessage(unittest.TestCase):
 
 
 
-class Test_getMessageVariables(unittest.TestCase):
+class Test_getMessageVariables(B3SimpleTestCase):
 
     def setUp(self):
         self.parser = DummyParser()
@@ -83,18 +84,18 @@ class Test_getMessageVariables(unittest.TestCase):
     def test_with_parameters(self):
         client = Client(name="Jack")
         rv = self.parser.getMessageVariables(client)
-        self.assertDictContainsSubset({'name': client.name}, rv, rv)
+        self.assertDictContainsSubset(rv, {'name': client.name})
 
     def test_with_named_parameters(self):
         client = Client(name="Jack")
-        self.assertDictContainsSubset({'clientname': client.name, 'reason': 'this is a good reason'}, self.parser.getMessageVariables(client=client, reason="this is a good reason"))
+        self.assertDictContainsSubset( self.parser.getMessageVariables(client=client, reason="this is a good reason"), {'clientname': client.name, 'reason': 'this is a good reason'})
 
     def test_with_named_parameters__unicode(self):
         client = Client(name=u"ÄÖé")
-        self.assertDictContainsSubset({'clientname':client.name, 'reason': 'this is a good reason'}, self.parser.getMessageVariables(client=client, reason="this is a good reason"))
+        self.assertDictContainsSubset(self.parser.getMessageVariables(client=client, reason="this is a good reason"), {'clientname':client.name, 'reason': 'this is a good reason'})
 
 
-class Test_getWrap(unittest.TestCase):
+class Test_getWrap(B3SimpleTestCase):
 
     def setUp(self):
         self.parser = DummyParser()

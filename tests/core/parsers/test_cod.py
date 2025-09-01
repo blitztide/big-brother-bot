@@ -31,12 +31,13 @@ from b3.config import XmlConfigParser
 from b3.parsers.cod import CodParser
 import six
 from six.moves import map
+from tests import B3SimpleTestCase
 
 log = logging.getLogger("test")
 log.setLevel(logging.INFO)
 
 
-class CodTestCase(unittest.TestCase):
+class CodTestCase(B3SimpleTestCase):
     """
     Test case that is suitable for testing Cod parser specific features
     """
@@ -98,19 +99,19 @@ num score ping guid   name            lastmsg address               qport rate
         # WHEN
         rv = self.console.getPlayerList()
         # THEN
-        self.assertDictContainsSubset({
+        self.assertDictContainsSubset(rv.get('1', {}), {
             'slot': '1', 'score': '0', 'ping': '55', 'guid': '63281996', 'name': 'BandAid^7', 'last': '50', 'ip': '11.11.11.11', 'pbid': None
-        }, rv.get('1', {}), rv)
-        self.assertDictContainsSubset({
+        })
+        self.assertDictContainsSubset( rv.get('2', {}), {
             'slot': '2', 'score': '0', 'ping': '157', 'guid': '81554346', 'name': 'hugobongenhielm^7', 'last': '50', 'ip': '11.11.11.11', 'pbid': None
-        }, rv.get('2', {}), rv)
-        self.assertDictContainsSubset({
+        })
+        self.assertDictContainsSubset( rv.get('3', {}), {
             'slot': '3', 'score': '0', 'ping': '156', 'guid': '86330555', 'name': 'Irish^7', 'last': '0', 'ip': '11.11.11.11', 'pbid': None
-        }, rv.get('3', {}), rv)
-        self.assertDictContainsSubset({
+        })
+        self.assertDictContainsSubset( rv.get('4', {}), {
             'slot': '4', 'score': '0', 'ping': '999', 'guid': '68003079', 'name': 'Ashhole^7', 'last': '750', 'ip': '11.11.11.11', 'pbid': None
-        }, rv.get('4', {}), rv)
-        self.assertDictContainsSubset({
+        })
+        self.assertDictContainsSubset(rv.get('5', {}), {
             'slot': '5', 'score': '5', 'ping': '53', 'guid': '318670', 'name': 'bigredtwit^7', 'last': '0', 'ip': '11.11.11.11', 'pbid': None
-        }, rv.get('5', {}), rv)
+        })
 

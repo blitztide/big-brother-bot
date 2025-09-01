@@ -405,7 +405,7 @@ class AbstractParser(b3.parser.Parser):
 
     def start_sayqueue_worker(self):
         self.sayqueuelistener = threading.Thread(target=self.sayqueuelistener_worker, name="sayqueuelistener")
-        self.sayqueuelistener.setDaemon(True)
+        self.sayqueuelistener.daemon = True
         self.sayqueuelistener.start()
 
     def wait_for_threads(self):
@@ -1652,7 +1652,7 @@ class AbstractParser(b3.parser.Parser):
                     gamemode_data = parts[1]
                     num_rounds = parts[2]
                 elif len(parts) == 2:
-                    if re.match('\d+', parts[1]):
+                    if re.match('\\d+', parts[1]):
                         # 2nd param is the number of rounds
                         num_rounds = parts[1]
                     else:
@@ -1778,7 +1778,7 @@ def patch_b3_clients():
             # create a thread that executes the worker and pushes out the queue
             if not hasattr(self, 'messagehandler') or not self.messagehandler.isAlive():
                 self.messagehandler = threading.Thread(target=self.messagequeueworker, name="%s_messagehandler" % self)
-                self.messagehandler.setDaemon(True)
+                self.messagehandler.daemon = True
                 self.messagehandler.start()
             else:
                 self.console.verbose('messagehandler for %s isAlive' %self.name)

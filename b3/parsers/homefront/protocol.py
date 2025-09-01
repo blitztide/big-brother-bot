@@ -28,7 +28,7 @@ creates a connection to a Homefront gameserver
 """
 
 from __future__ import absolute_import
-import asyncore
+import asyncio
 import socket
 import time
 

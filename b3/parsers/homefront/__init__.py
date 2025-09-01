@@ -27,7 +27,7 @@ from __future__ import absolute_import
 import b3
 import b3.cron
 import b3.events
-import asyncore
+import asyncio
 import ftplib
 import os
 from . import protocol

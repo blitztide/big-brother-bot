@@ -28,7 +28,7 @@ __version__ = '1.2'
 
 import logging
 import time
-import asyncore
+import asyncio
 import socket
 import threading
 import hashlib
@@ -190,6 +190,9 @@ def receivePacket(_socket, receiveBuffer):
 
 
 class FrostbiteError(Exception):
+    def __init__(self, message, *args, **kwargs):
+        super().__init__(*args,**kwargs)
+        self.message = message
     pass
 
 
@@ -217,7 +220,7 @@ class NetworkError(FrostbiteError):
     pass
 
 
-class FrostbiteDispatcher(asyncore.dispatcher_with_send):
+class FrostbiteDispatcher():
 
     def __init__(self, host, port):
         """
@@ -225,11 +228,13 @@ class FrostbiteDispatcher(asyncore.dispatcher_with_send):
         :param host: The Frostbite2 server host
         :param port: The Frostbite2 server port
         """
-        asyncore.dispatcher_with_send.__init__(self)
         self._buffer_in = ''
         self.getLogger().info("connecting")
-        self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
-        asyncore.dispatcher_with_send.connect(self, (host, port))
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.connect(self, (host, port))
+        self.socket.setblocking(False)
+        self.loop = asyncio.new_event_loop()
+        self.loop.create_task(handle_read())
         self._frostbite_event_handler = None
         self._frostbite_command_response_handler = None
 
@@ -282,19 +287,19 @@ class FrostbiteDispatcher(asyncore.dispatcher_with_send):
     def handle_connect(self):
         self.getLogger().debug("handle_connect")
     
-    def handle_close(self):
+    def close(self):
         """
         Called when the socket is closed.
         """
         self.getLogger().debug("handle_close")
-        self.close()
+        self.socket.close()
 
-    def handle_read(self):
+    async def handle_read(self):
         """
         Called when the asynchronous loop detects that a read() call on the channel's socket will succeed.
         """
         # received raw data
-        data = self.recv(8192)
+        data = await self.loop.sock_recv(self.socket, 8192)
         self._buffer_in += data
         self.getLogger().debug('read %s char from Frostbite2 gameserver' % len(data))
 
@@ -456,7 +461,8 @@ class FrostbiteServer(threading.Thread):
         self.getLogger().info('start loop')
         try:
             while not self.isStopped():
-                asyncore.loop(count=1, timeout=1)
+                self.frostbite_dispatcher.loop.stop()
+                self.frostbite_dispatcher.loop.run_forever()
         except KeyboardInterrupt:
             pass
         finally:

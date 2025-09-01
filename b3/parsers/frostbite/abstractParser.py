@@ -227,7 +227,7 @@ class AbstractParser(b3.parser.Parser):
         func = ''
         match = re.search(r"^(?P<actor>[^.]+)\.on(?P<event>.+)$", eventType)
         if match:
-            func = 'On%s%s' % (string.capitalize(match.group('actor')), string.capitalize(match.group('event')))
+            func = 'On%s%s' % (str.capitalize(match.group('actor')), str.capitalize(match.group('event')))
             #self.debug("-==== FUNC!!: " + func)
             
         if match and hasattr(self, func):

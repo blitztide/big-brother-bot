@@ -31,7 +31,7 @@
 from __future__ import absolute_import
 import re
 import socket
-import asyncore
+import asyncio
 from six.moves import map
 
 PACKETSIZE=1400

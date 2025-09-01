@@ -33,7 +33,8 @@ import b3
 import b3.functions
 import b3.exceptions
 import b3.storage
-from six.moves.configparser import ConfigParser, NoOptionError, DEFAULTSECT, NoSectionError
+from six.moves.configparser import NoOptionError, DEFAULTSECT, NoSectionError
+from six.moves.configparser import RawConfigParser as ConfigParser
 
 try:
     from xml.etree import cElementTree as ElementTree

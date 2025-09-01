@@ -32,6 +32,8 @@ from b3 import TEAM_UNKNOWN
 from b3.clients import Client
 from b3.config import XmlConfigParser, CfgConfigParser
 from b3.fake import FakeClient
+import pytest
+pytest.importorskip("b3.parsers.ravaged",exc_type=NameError)
 from b3.parsers.ravaged import RavagedParser, TEAM_SCAVENGERS, TEAM_RESISTANCE
 from b3.plugins.admin import AdminPlugin
 

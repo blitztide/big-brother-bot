@@ -31,6 +31,8 @@ from b3 import TEAM_BLUE, TEAM_RED, TEAM_UNKNOWN, TEAM_SPEC
 from b3.clients import Client
 from b3.config import XmlConfigParser
 from b3.fake import FakeClient
+import pytest
+pytest.importorskip("b3.parsers.csgo",exc_type=NameError)
 from b3.parsers.csgo import CsgoParser
 import six
 from six.moves import filter

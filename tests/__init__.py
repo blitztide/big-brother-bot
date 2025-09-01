@@ -37,7 +37,7 @@ from six.moves import map
 logging.raiseExceptions = False  # get rid of 'No handlers could be found for logger output' message
 import b3.output # do not remove, needed because the module alters some defaults of the logging module
 log = logging.getLogger('output')
-log.setLevel(logging.WARNING)
+log.setLevel(logging.DEBUG)
 
 from mock import Mock, patch
 import time

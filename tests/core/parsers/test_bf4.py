@@ -306,7 +306,7 @@ class Test_bf4_events(BF4TestCase):
 
         event = self.parser.queueEvent.call_args[0][0]
         self.assertEqual("Say", self.parser.getEventName(event.type))
-        self.assertEquals('test all', event.data)
+        self.assertEqual('test all', event.data)
         self.assertEqual(self.joe, event.client)
 
 
@@ -318,7 +318,7 @@ class Test_bf4_events(BF4TestCase):
 
         event = self.parser.queueEvent.call_args[0][0]
         self.assertEqual("Team Say", self.parser.getEventName(event.type))
-        self.assertEquals('test team', event.data)
+        self.assertEqual('test team', event.data)
         self.assertEqual(self.joe, event.client)
 
 
@@ -330,7 +330,7 @@ class Test_bf4_events(BF4TestCase):
 
         event = self.parser.queueEvent.call_args[0][0]
         self.assertEqual("Squad Say", self.parser.getEventName(event.type))
-        self.assertEquals('test squad', event.data)
+        self.assertEqual('test squad', event.data)
         self.assertEqual(self.joe, event.client)
 
     def test_player_onChat_event_squad_comrose(self):
@@ -341,7 +341,7 @@ class Test_bf4_events(BF4TestCase):
 
         event = self.parser.queueEvent.call_args[0][0]
         self.assertEqual("Client Comrose", self.parser.getEventName(event.type))
-        self.assertEquals('ID_CHAT_REQUEST_RIDE', event.data)
+        self.assertEqual('ID_CHAT_REQUEST_RIDE', event.data)
         self.assertEqual(self.joe, event.client)
 
     def test_player_onChat_event_team_comrose(self):
@@ -352,7 +352,7 @@ class Test_bf4_events(BF4TestCase):
 
         event = self.parser.queueEvent.call_args[0][0]
         self.assertEqual("Client Comrose", self.parser.getEventName(event.type))
-        self.assertEquals('ID_CHAT_THANKS', event.data)
+        self.assertEqual('ID_CHAT_THANKS', event.data)
         self.assertEqual(self.joe, event.client)
 
     def test_player_onDisconnect_event(self):
@@ -364,7 +364,7 @@ class Test_bf4_events(BF4TestCase):
         event = self.parser.queueEvent.call_args[0][0]
         print(event.client.name)
         self.assertEqual('Client disconnected', self.parser.getEventName(event.type))
-        self.assertEquals('test', event.data)
+        self.assertEqual('test', event.data)
         self.assertEqual(self.joe, event.client)
 
 class Test_punkbuster_events(BF4TestCase):
@@ -388,7 +388,7 @@ class Test_punkbuster_events(BF4TestCase):
         self.assert_pb_misc_evt('PunkBuster Server: 1   b59ffffffffffffffffffffffffffc7d {13/15} "Cucurbitaceae" "87.45.14.2:3659" retest" ""')
         self.assert_pb_misc_evt('PunkBuster Server: 1   b59ffffffffffffffffffffffffffc7d {0/1440} "Cucurbitaceae" "87.45.14.2:3659" mlkjsqfd" ""')
 
-        self.assertEquals(
+        self.assertEqual(
             '''Event<EVT_PUNKBUSTER_UNKNOWN>(['PunkBuster Server: 1   (UnBanned) b59ffffffffffffffffffffffffffc7d {15/15} "Cucurbitaceae" "87.45.14.2:3659" retest" ""'], None, None)''',
             str(self.pb('PunkBuster Server: 1   (UnBanned) b59ffffffffffffffffffffffffffc7d {15/15} "Cucurbitaceae" "87.45.14.2:3659" retest" ""')))
 

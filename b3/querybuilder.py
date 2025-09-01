@@ -46,8 +46,10 @@ class QueryBuilder(object):
             return str(word)
         elif word is None:
             return '"None"'
-        else:
+        elif type(word) is str:
             return '"%s"' % word.replace('"', '\\"')
+        else:
+            return '"%s"' % word.replace(b'"', b'\\"')
 
     def quoteArgs(self, args):
         """

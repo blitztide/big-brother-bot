@@ -25,7 +25,7 @@
 from __future__ import absolute_import
 import b3
 import sys
-import asyncore
+import asyncio
 import socket
 
 from b3.parser import Parser

@@ -406,7 +406,7 @@ class Iourt41Parser(AbstractParser):
         Parse a log line returning extracted tokens.
         :param line: The line to be parsed
         """
-        line = re.sub(self._lineClear, '', line, 1)
+        line = re.sub(self._lineClear, '', line, count=1)
         m = None
         for f in self._lineFormats:
             m = re.match(f, line)

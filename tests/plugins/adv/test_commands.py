@@ -24,8 +24,9 @@
 from __future__ import absolute_import
 from b3.fake import FakeClient
 from tests.plugins.adv import AdvTestCase
+import unittest
 
-class Test_commands(AdvTestCase):
+class Test_commands(AdvTestCase, unittest.TestCase):
 
     def setUp(self):
         AdvTestCase.setUp(self)

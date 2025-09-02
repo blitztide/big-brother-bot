@@ -43,7 +43,7 @@ def flush_console_streams():
     sys.stdout.flush()
 
 
-class Test_config(ChatloggerTestCase):
+class Test_config(ChatloggerTestCase, unittest.TestCase):
 
     def setUp(self):
         ChatloggerTestCase.setUp(self)

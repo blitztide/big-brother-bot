@@ -29,6 +29,7 @@ import logging
 
 from mock import Mock, patch
 from b3.fake import FakeClient
+import unittest
 from tests import B3TestCase
 from b3.plugins.censor import CensorPlugin
 from b3.config import XmlConfigParser

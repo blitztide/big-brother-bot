@@ -31,9 +31,10 @@ from mockito import unstub
 from b3.fake import FakeClient
 from b3.plugins.geolocation import GeolocationPlugin
 from tests import B3TestCase
+import unittest
 
 
-class GeolocationTestCase(B3TestCase, unittest.TestCase):
+class GeolocationTestCase(B3TestCase):
 
     def setUp(self):
         self.log = logging.getLogger('output')

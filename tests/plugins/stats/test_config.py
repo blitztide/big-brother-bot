@@ -27,6 +27,7 @@ from textwrap import dedent
 from tests import B3TestCase
 from b3.plugins.stats import StatsPlugin
 from b3.config import CfgConfigParser
+import unittest
 
 
 class Test_config(B3TestCase, unittest.TestCase):

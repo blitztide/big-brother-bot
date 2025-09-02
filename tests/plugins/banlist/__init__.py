@@ -23,11 +23,10 @@
 # ################################################################### #
 
 from __future__ import absolute_import
-from unittest import TestCase
 from mock import patch
 
 
-class BanlistTestCase(TestCase):
+class BanlistTestCase():
     """
     TestCase suitable for testing a Banlist class
     """

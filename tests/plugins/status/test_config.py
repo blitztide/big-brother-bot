@@ -28,6 +28,7 @@ from mock import patch
 from tests import B3TestCase
 from b3.plugins.status import StatusPlugin
 from b3.config import CfgConfigParser
+import unittest
 
 
 class Test_config(B3TestCase, unittest.TestCase):

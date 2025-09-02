@@ -34,6 +34,7 @@ from mock import patch, call
 from tests import B3TestCase
 from tests.plugins.tk import Test_Tk_plugin
 from six.moves import zip
+import unittest
 
 
 class Test_onLoadConfig(Test_Tk_plugin):

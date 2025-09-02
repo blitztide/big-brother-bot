@@ -29,9 +29,10 @@ import time
 
 from b3.plugins.geolocation.location import Location
 from tests.plugins.geolocation import GeolocationTestCase
+import unittest
 
 
-class Test_events(GeolocationTestCase):
+class Test_events(GeolocationTestCase, unittest.TestCase):
 
     def test_event_client_geolocation_success(self):
         # GIVEN

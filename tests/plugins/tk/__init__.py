@@ -32,6 +32,7 @@ from b3.config import CfgConfigParser
 from mockito import when
 from tests import B3TestCase
 from textwrap import dedent
+import unittest
 
 
 class Test_Tk_plugin(B3TestCase, unittest.TestCase):

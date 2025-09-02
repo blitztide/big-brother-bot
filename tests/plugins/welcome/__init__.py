@@ -24,6 +24,7 @@ from b3.plugins.welcome import WelcomePlugin
 from b3.config import CfgConfigParser
 from b3.fake import FakeClient
 from tests import B3TestCase, logging_disabled
+import unittest
 
 
 class Welcome_functional_test(B3TestCase, unittest.TestCase):

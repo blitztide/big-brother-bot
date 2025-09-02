@@ -41,6 +41,7 @@ from b3.fake import FakeClient
 from b3.plugins.admin import AdminPlugin
 from tests import B3TestCase
 from tests import logging_disabled
+import unittest
 
 
 DEFAULT_XLRSTATS_CONFIG_FILE = os.path.normpath(os.path.join(os.path.dirname(b3_module__file__), "conf", "plugin_xlrstats.ini"))
@@ -51,7 +52,7 @@ LOGGER = logging.getLogger('output')
 LOGGER.setLevel(logging.DEBUG)
 
 
-class XlrstatsTestCase(B3TestCase, unittest.TestCase):
+class XlrstatsTestCase(B3TestCase):
 
     def setUp(self):
         """
@@ -102,7 +103,7 @@ class XlrstatsTestCase(B3TestCase, unittest.TestCase):
         self.p.minlevel = 1  # tests in this module assume unregistered players aren't considered by Xlrstats
         self.p.onStartup()
 
-class Test_get_PlayerAnon(XlrstatsTestCase):
+class Test_get_PlayerAnon(XlrstatsTestCase, unittest.TestCase):
 
     def setUp(self):
         XlrstatsTestCase.setUp(self)
@@ -130,7 +131,7 @@ class Test_get_PlayerAnon(XlrstatsTestCase):
         self.assertEqual(0, s.hide)
 
 
-class Test_get_PlayerStats(XlrstatsTestCase):
+class Test_get_PlayerStats(XlrstatsTestCase, unittest.TestCase):
 
     def setUp(self):
         XlrstatsTestCase.setUp(self)
@@ -200,7 +201,7 @@ class Test_get_PlayerStats(XlrstatsTestCase):
         self.assertEqual("", s2.id_token)
 
 
-class Test_cmd_xlrstats(XlrstatsTestCase):
+class Test_cmd_xlrstats(XlrstatsTestCase, unittest.TestCase):
 
     def setUp(self):
         XlrstatsTestCase.setUp(self)
@@ -258,7 +259,7 @@ class Test_cmd_xlrstats(XlrstatsTestCase):
         self.assertEqual(['XLR Stats: P2 : K 0 D 0 TK 0 Ratio 0.00 Skill 1000.00'], self.p1.message_history)
 
 
-class Test_cmd_xlrid(XlrstatsTestCase):
+class Test_cmd_xlrid(XlrstatsTestCase, unittest.TestCase):
 
     def setUp(self):
         XlrstatsTestCase.setUp(self)
@@ -281,7 +282,7 @@ class Test_cmd_xlrid(XlrstatsTestCase):
         self.assertEqual(['Token saved!'], self.p1.message_history)
 
 
-class Test_kill(XlrstatsTestCase):
+class Test_kill(XlrstatsTestCase, unittest.TestCase):
     """
     Validates that the stats get updated as expected upon kill events
     """
@@ -352,7 +353,7 @@ class Test_kill(XlrstatsTestCase):
         self.console.verbose.assert_called_with("XlrstatsPlugin: bot involved: do not process!")
 
 
-class Test_storage(XlrstatsTestCase):
+class Test_storage(XlrstatsTestCase, unittest.TestCase):
 
     def setUp(self):
         XlrstatsTestCase.setUp(self)
@@ -644,7 +645,7 @@ class Test_storage(XlrstatsTestCase):
         self.assertEqual(s.count, s2.count)
 
 
-class Test_events(XlrstatsTestCase):
+class Test_events(XlrstatsTestCase, unittest.TestCase):
 
     def setUp(self):
         XlrstatsTestCase.setUp(self)

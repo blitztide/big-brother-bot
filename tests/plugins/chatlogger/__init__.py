@@ -50,7 +50,7 @@ def cleanUp():
     testcase_lock.release()
 
 
-class ChatloggerTestCase(unittest.TestCase):
+class ChatloggerTestCase():
 
     def setUp(self):
         testcase_lock.acquire()

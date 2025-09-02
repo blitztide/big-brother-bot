@@ -61,8 +61,7 @@ RSS_FEED_CONTENT = """\
 </rss>
 """
 
-
-class AdvTestCase(B3TestCase, unittest.TestCase):
+class AdvTestCase(B3TestCase):
     """
     Ease test cases that need an working B3 console and need to control the ADV plugin config
     """

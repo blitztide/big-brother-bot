@@ -32,6 +32,7 @@ from b3.plugins.admin import AdminPlugin
 from b3.plugins.pluginmanager import PluginmanagerPlugin
 from b3.config import CfgConfigParser
 from tests import B3TestCase
+import unittest
 
 
 class PluginmanagerTestCase(B3TestCase, unittest.TestCase):

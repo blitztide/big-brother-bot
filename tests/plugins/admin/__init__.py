@@ -28,6 +28,7 @@ from b3.fake import FakeClient
 from b3.plugins.admin import AdminPlugin
 from b3.config import CfgConfigParser
 from b3 import TEAM_BLUE
+import unittest
 from b3 import TEAM_RED
 from tests import B3TestCase
 

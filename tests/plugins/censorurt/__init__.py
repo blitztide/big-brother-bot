@@ -32,6 +32,7 @@ from b3.fake import FakeClient
 from tests import B3TestCase
 from b3.plugins.censorurt import CensorurtPlugin
 from b3.config import XmlConfigParser
+import unittest
 
 
 class CensorurtTestCase(B3TestCase, unittest.TestCase):

@@ -33,7 +33,7 @@ from b3.plugins.duel import DuelPlugin
 from tests import logging_disabled
 
 
-class DuelTestCase(unittest.TestCase):
+class DuelTestCase():
 
     def setUp(self):
         console_conf = CfgConfigParser()

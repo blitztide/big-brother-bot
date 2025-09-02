@@ -26,9 +26,9 @@ from __future__ import absolute_import
 from __future__ import print_function
 from tests.plugins.adv import AdvTestCase
 from six.moves import range
+import unittest
 
-
-class Test_config(AdvTestCase):
+class Test_config(AdvTestCase, unittest.TestCase):
 
     def test_default_config(self):
         self.init_plugin()

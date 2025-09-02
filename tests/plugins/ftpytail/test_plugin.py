@@ -25,6 +25,7 @@
 from __future__ import absolute_import
 from tests import B3TestCase
 from b3.plugins.ftpytail import FtpytailPlugin
+import unittest
 
 
 class FtpytailPluginTestCase(B3TestCase, unittest.TestCase):

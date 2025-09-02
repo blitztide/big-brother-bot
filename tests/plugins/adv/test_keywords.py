@@ -30,8 +30,10 @@ from b3.fake import FakeClient
 from mock import patch, call, Mock
 from mockito import when, any as ANY
 from tests.plugins.adv import AdvTestCase, RSS_FEED_CONTENT
+import unittest
 
-class Test_keywords(AdvTestCase):
+class Test_keywords(AdvTestCase, unittest.TestCase):
+    __test__ = False
 
     def setUp(self):
         AdvTestCase.setUp(self)

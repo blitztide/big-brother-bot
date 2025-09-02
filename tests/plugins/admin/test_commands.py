@@ -35,6 +35,7 @@ from b3.config import CfgConfigParser
 from b3.plugins.admin import Command
 from b3.clients import Client, Group, ClientVar, ClientBan, ClientTempBan
 from tests import InstantTimer
+import unittest
 from tests.plugins.admin import Admin_TestCase
 from tests.plugins.admin import Admin_functional_test
 from six.moves import range

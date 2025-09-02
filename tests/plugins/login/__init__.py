@@ -31,7 +31,7 @@ from b3.plugins.admin import AdminPlugin
 from tests import B3TestCase
 from b3.plugins.login import LoginPlugin
 from b3.config import CfgConfigParser
-
+import unittest
 
 F00_MD5 = '9f06f2538cdbb40bce9973f60506de09'
 

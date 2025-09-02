@@ -34,7 +34,7 @@ from tests import B3TestCase
 from textwrap import dedent
 
 
-class Test_Tk_plugin(B3TestCase):
+class Test_Tk_plugin(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         super(Test_Tk_plugin, self).setUp()
@@ -43,7 +43,7 @@ class Test_Tk_plugin(B3TestCase):
         self.p = TkPlugin(self.console, self.conf)
 
 
-class Tk_functional_test(B3TestCase):
+class Tk_functional_test(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)

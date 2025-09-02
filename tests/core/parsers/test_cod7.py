@@ -31,6 +31,7 @@ from b3.config import XmlConfigParser
 from b3.parsers.cod7 import Cod7Parser
 import six
 from six.moves import map
+from tests import B3SimpleTestCase
 
 log = logging.getLogger("test")
 log.setLevel(logging.INFO)
@@ -70,6 +71,11 @@ class Cod7TestCase(unittest.TestCase):
 
         self.player = self.console.clients.newClient(cid="4", guid="theGuid", name="theName", ip="11.22.33.44")
 
+    def assertDictContainsSubset(self, test, target):
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
     def tearDown(self):
         if hasattr(self, "parser"):

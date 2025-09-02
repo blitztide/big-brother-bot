@@ -27,7 +27,7 @@ from tests import B3TestCase
 from b3.plugins.publist import PublistPlugin
 
 
-class PublistPluginTestCase(B3TestCase):
+class PublistPluginTestCase(B3TestCase, unittest.TestCase):
     def test_load_plugin(self):
         p = PublistPlugin(self.console)
         p.onLoadConfig()

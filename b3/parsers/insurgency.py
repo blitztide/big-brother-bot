@@ -26,6 +26,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 import re
 import time
+import types
 
 from b3 import TEAM_UNKNOWN
 from b3 import TEAM_BLUE
@@ -181,9 +182,9 @@ class InsurgencyParser(Parser):
                 client.message('do you mean : %s ?' % ', '.join(suggestions))
 
         adminPlugin = self.getPlugin('admin')
-        adminPlugin.parse_map_parameters = parse_map_parameters
+        adminPlugin.parse_map_parameters = types.MethodType(parse_map_parameters, adminPlugin)
         command = adminPlugin._commands['map']
-        command.func = new_cmd_map
+        command.func = types.MethodType(new_cmd_map, adminPlugin)
         command.help = new_cmd_map.__doc__.strip()
 
     def startup(self):
@@ -940,7 +941,7 @@ class InsurgencyParser(Parser):
             return
         if line.startswith("mp\x08 \x08\x08 \x08"):
             line = line[8:]
-        text = line.decode('UTF-8', 'replace')
+        text = line
         data = None
 
         m = re.match(RE_HL_LOG_LINE, text)

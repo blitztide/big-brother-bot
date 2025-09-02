@@ -80,7 +80,7 @@ if is_mysql_ready:
 #===============================================================================
 
 @unittest.skipIf(not is_mysql_ready, no_mysql_reason)
-class Test_MySQL(B3TestCase, StorageAPITest):
+class Test_MySQL(B3TestCase, StorageAPITest, unittest.TestCase):
 
     def setUp(self):
         """this method is called before each test"""

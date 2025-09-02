@@ -30,6 +30,8 @@ import unittest
 from mock import patch
 from b3.update import B3version
 
+
+@unittest.skip("Update deprecated")
 class TestB3Version(unittest.TestCase):
     def test_no_exception(self):
         B3version("1.4")
@@ -107,7 +109,7 @@ class TestB3Version(unittest.TestCase):
         self.assertLess(B3version('2.5.1b4'), B3version('2.5.2'))
         self.assertLess(B3version("1.9.0dev7.daily5-20120904"), B3version("1.9dev7.daily19-20121001"))
 
-
+@unittest.skip("Update deprecated")
 class TestGetDefaultChannel(unittest.TestCase):
     def test_rotten_input(self):
         self.assertEqual(update.UPDATE_CHANNEL_STABLE, update.getDefaultChannel(None))
@@ -136,7 +138,7 @@ class TestGetDefaultChannel(unittest.TestCase):
         self.assertEqual(update.UPDATE_CHANNEL_DEV, update.getDefaultChannel("1.2dev5"))
         self.assertEqual(update.UPDATE_CHANNEL_DEV, update.getDefaultChannel("1.10.0dev.daily118"))
 
-
+@unittest.skip("Update Deprecated")
 class TestCheckUpdateUrl(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -164,7 +166,7 @@ class TestCheckUpdateUrl(unittest.TestCase):
     #     result = update.checkUpdate('1.2', singleLine=True, showErrormsg=True)
     #     self.assertIn('Could not check updates', result)
 
-
+@unittest.skip("Update Deprecated")
 class TestCheckUpdate (unittest.TestCase):
 
     def setUp(self):

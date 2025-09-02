@@ -255,16 +255,16 @@ class Test_punkbuster_events(BFHTestCase):
     def test_PB_UCON_message(self):
         result = self.pb(
             'PunkBuster Server: PB UCON "ggc_85.214.107.154"@85.214.107.154:14516 [admin.say "GGC-Stream.com - Welcome Cucurbitaceae with the GUID 31077c7d to our server." all]\n')
-        self.assertEqual(
-            'Event<EVT_PUNKBUSTER_UCON>({\'ip\': \'85.214.107.154\', \'cmd\': \'admin.say "GGC-Stream.com - Welcome Cucurbitaceae with the GUID 31077c7d to our server." all\', \'from\': \'ggc_85.214.107.154\', \'port\': \'14516\'}, None, None)',
-            str(result))
+        self.assertDictEqual(
+            {'ip': '85.214.107.154', 'cmd': 'admin.say "GGC-Stream.com - Welcome Cucurbitaceae with the GUID 31077c7d to our server." all', 'from': 'ggc_85.214.107.154', 'port': '14516'},
+            result.data)
 
     def test_PB_Screenshot_received_message(self):
         result = self.pb(
             'PunkBuster Server: Screenshot C:\\games\\bf3\\173_199_73_213_25200\\862147\\bf3\\pb\\svss\\pb000709.png successfully received (MD5=4576546546546546546546546543E1E1) from 19 Jaffar [da876546546546546546546546547673(-) 111.22.33.111:3659]\n')
-        self.assertEqual(
-            r"Event<EVT_PUNKBUSTER_SCREENSHOT_RECEIVED>({'slot': '19', 'name': 'Jaffar', 'ip': '111.22.33.111', 'pbid': 'da876546546546546546546546547673', 'imgpath': 'C:\\games\\bf3\\173_199_73_213_25200\\862147\\bf3\\pb\\svss\\pb000709.png', 'port': '3659', 'md5': '4576546546546546546546546543E1E1'}, None, None)",
-            str(result))
+        self.assertDictEqual(
+            {'slot': '19', 'name': 'Jaffar', 'ip': '111.22.33.111', 'pbid': 'da876546546546546546546546547673', 'imgpath': 'C:\\games\\bf3\\173_199_73_213_25200\\862147\\bf3\\pb\\svss\\pb000709.png', 'port': '3659', 'md5': '4576546546546546546546546543E1E1'},
+            result.data)
 
     def test_PB_SV_PList(self):
         self.assert_pb_misc_evt(
@@ -285,10 +285,10 @@ class Test_punkbuster_events(BFHTestCase):
         self.assert_pb_misc_evt("PunkBuster Server: 0 Ban Records Updated in d:\\localuser\\g119142\\pb\\pbbans.dat")
 
     def test_misc(self):
-        self.assertEqual(
-            "Event<EVT_PUNKBUSTER_LOST_PLAYER>({'slot': '1', 'ip': 'x.x.x.x', 'port': '3659', 'name': 'joe', 'pbuid': '0837c128293d42aaaaaaaaaaaaaaaaa'}, None, None)",
-            str(self.pb(
-                "PunkBuster Server: Lost Connection (slot #1) x.x.x.x:3659 0837c128293d42aaaaaaaaaaaaaaaaa(-) joe")))
+        self.assertDictEqual(
+            {'slot': '1', 'ip': 'x.x.x.x', 'port': '3659', 'name': 'joe', 'pbuid': '0837c128293d42aaaaaaaaaaaaaaaaa'},
+            self.pb(
+                "PunkBuster Server: Lost Connection (slot #1) x.x.x.x:3659 0837c128293d42aaaaaaaaaaaaaaaaa(-) joe").data)
 
         self.assert_pb_misc_evt("PunkBuster Server: Invalid Player Specified: None")
         self.assert_pb_misc_evt("PunkBuster Server: Matched: Cucurbitaceae (slot #1)")
@@ -429,7 +429,7 @@ class Test_bfh_maps(BFHTestCase):
         def assertSoundsLike(expected_id, input_value):
             self.assertEqual(expected_id, self.parser.getMapsSoundingLike(input_value), input_value)
 
-        assertSoundsLike(['downtown', 'derailed', 'hollywood heights'], '')
+        assertSoundsLike(['bank job', 'derailed', 'downtown'], '')
         assertSoundsLike('mp_bank', 'Bank Job')
         assertSoundsLike('mp_bank', 'bankjob')
         assertSoundsLike('mp_bank', 'bancjob')
@@ -465,7 +465,7 @@ class Test_bfh_maps(BFHTestCase):
             self.assertListEqual(expected_list, self.parser.getGamemodeSoundingLike(map_id, input_gamemode),
                                  "%s:%r" % (map_id, input_gamemode))
 
-        assertSoundsLikeList(['Conquest Large', 'Rescue', 'Heist'],   'mp_bank', '')
+        assertSoundsLikeList(['Blood Money', 'Conquest Large', 'Conquest Small'],   'mp_bank', '')
 
         assertSoundsLike('TurfWarLarge0',   'mp_bank', 'TurfWarLarge0')
         assertSoundsLike('TurfWarSmall0',   'mp_bank', 'TurfWarSmall0')
@@ -544,8 +544,8 @@ class Test_bfh_maps(BFHTestCase):
         assertSoundsLike('Hostage0',        'mp_glades', 'Hostage0')
         assertSoundsLike('TeamDeathMatch0', 'mp_glades', 'TeamDeathMatch0')
 
-        assertSoundsLikeList(['Conquest Small', 'Heist', 'Team Deathmatch'],   'mp_growhouse', '')
-        assertSoundsLikeList(['Conquest Small', 'Heist', 'Blood Money'],   'mp_growhouse', 'TurfWarLarge0')
+        assertSoundsLikeList(['Blood Money', 'Conquest Small', 'Crosshair'],   'mp_growhouse', '')
+        assertSoundsLikeList(['Blood Money', 'Conquest Small', 'Crosshair'],   'mp_growhouse', 'TurfWarLarge0')
         assertSoundsLike('TurfWarSmall0',   'mp_growhouse', 'TurfWarSmall0')
         assertSoundsLike('Heist0',          'mp_growhouse', 'Heist0')
         assertSoundsLike('Bloodmoney0',     'mp_growhouse', 'Bloodmoney0')

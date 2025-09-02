@@ -262,7 +262,7 @@ class AbstractParser(b3.parser.Parser):
     ####################################################################################################################
 
     def OnSay(self, action, data, match=None):
-        msg = string.split(data, ': ', 1)
+        msg = str.split(data, ': ', 1)
         if not len(msg) == 2:
             return None
 

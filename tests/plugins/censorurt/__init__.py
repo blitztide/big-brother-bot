@@ -34,7 +34,7 @@ from b3.plugins.censorurt import CensorurtPlugin
 from b3.config import XmlConfigParser
 
 
-class CensorurtTestCase(B3TestCase):
+class CensorurtTestCase(B3TestCase, unittest.TestCase):
     """
     Ease testcases that need an working B3 console and need to control the censorurt plugin config
     """

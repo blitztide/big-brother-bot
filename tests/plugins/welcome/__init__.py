@@ -26,7 +26,7 @@ from b3.fake import FakeClient
 from tests import B3TestCase, logging_disabled
 
 
-class Welcome_functional_test(B3TestCase):
+class Welcome_functional_test(B3TestCase, unittest.TestCase):
 
     def setUp(self):
 

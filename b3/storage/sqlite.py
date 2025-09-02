@@ -114,7 +114,8 @@ class SqliteStorage(DatabaseStorage):
         if cursor and not cursor.EOF:
             while not cursor.EOF:
                 row = cursor.getRow()
-                tables.append(list(row.values())[0])
+                self.console.bot(row.values())
+                tables.append(list(row.values())[1])
                 cursor.moveNext()
         cursor.close()
         return tables

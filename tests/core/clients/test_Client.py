@@ -33,7 +33,7 @@ from tests import B3TestCase
 from six.moves import map
 
 
-class Test_Client(B3TestCase):
+class Test_Client(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)
@@ -145,7 +145,7 @@ class Test_Client(B3TestCase):
 
 
 
-class Test_Client_groups(B3TestCase):
+class Test_Client_groups(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)
@@ -218,7 +218,7 @@ class Test_Client_groups(B3TestCase):
         self.assertTrue(self.client.inGroup(self.group_superadmin))
 
 
-class Test_Client_events(B3TestCase):
+class Test_Client_events(B3TestCase, unittest.TestCase):
     
     def setUp(self):
         B3TestCase.setUp(self)

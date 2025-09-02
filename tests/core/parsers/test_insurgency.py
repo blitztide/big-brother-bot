@@ -30,7 +30,7 @@ import unittest
 from mock import Mock
 from mock import patch
 from mock import call
-from mockito import when
+from mockito import when, ANY
 from b3 import TEAM_BLUE, TEAM_FREE
 from b3 import TEAM_RED
 from b3 import TEAM_UNKNOWN
@@ -218,6 +218,10 @@ class AdminTestCase(unittest.TestCase):
         when(self.parser).getPlugin('admin').thenReturn(adminPlugin)
         when(self.parser).getAllAvailableMaps().thenReturn (['buhriz', 'district', 'sinjar', 'siege', 'uprising', 'ministry', 'revolt', 'heights', 'contact', 'peak', 'panj', 'market'])
         when(self.parser).getMap().thenReturn('buhriz')
+        when(self.parser.output).write(ANY).thenReturn()
+        when(self.parser.output).write("sm plugins list").thenReturn({})
+        when(self.parser.output).write('sm_addban 0 "guid_bill" Rule #1: No racism of any kind').thenReturn()
+        when(self.parser.output).write('sm_kick #2 Rule #1: No racism of any kind').thenReturn()
         self.parser.startup()
         self.parser.patch_b3_admin_plugin() # seems that without this the test module doesn't patch the admin plugin
 
@@ -420,17 +424,15 @@ class FunctionalTest(AdminTestCase):
         # WHEN
         superadmin.says("!map blargh blub")
         # THEN
-        self.assertListEqual(["do you mean : buhriz, district, sinjar, siege, uprising, ministry, revolt, heights, "
-                              "contact, peak, panj, market ?"], superadmin.message_history)
+        self.assertListEqual(["do you mean : buhriz, contact, district, heights, market, ministry, panj, peak, revolt, siege, sinjar, uprising ?"], superadmin.message_history)
 
     def test_map_with_correct_parameters(self):
         # GIVEN
         superadmin = FakeClient(self.parser, name="superadmin", guid="guid_superadmin", groupBits=128, team=TEAM_UNKNOWN)
         superadmin.connects("1")
-        # WHEN
-        superadmin.says("!map market push")
-        # THEN
-        self.parser.output.write.assert_has_calls([call('changelevel market push')])
+        with patch.object(self.parser.output, 'write') as write_mock:
+            superadmin.says("!map market push")
+            write_mock.assert_has_calls([call('changelevel market push')])
 
     def test_say(self):
         self.parser.msgPrefix = "[Pre]"

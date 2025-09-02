@@ -29,7 +29,7 @@ from b3.plugins.stats import StatsPlugin
 from b3.config import CfgConfigParser
 
 
-class Test_config(B3TestCase):
+class Test_config(B3TestCase, unittest.TestCase):
 
     def test_empty(self):
         # GIVEN

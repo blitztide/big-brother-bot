@@ -32,6 +32,7 @@ import sys
 import re
 import traceback
 import time
+import types
 import string
 import six.moves.queue
 import threading

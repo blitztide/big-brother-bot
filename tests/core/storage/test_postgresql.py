@@ -84,7 +84,7 @@ else:
 #===============================================================================
 
 @unittest.skipIf(not is_postgresql_ready, no_postgresql_reason)
-class Test_PostgreSQL(B3TestCase, StorageAPITest):
+class Test_PostgreSQL(B3TestCase, StorageAPITest, unittest.TestCase):
 
     def setUp(self):
         """this method is called before each test"""

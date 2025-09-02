@@ -24,10 +24,11 @@
 
 from __future__ import absolute_import
 from tests import B3TestCase
+import unittest
 import b3
 import os
     
-class Test_getConfPath(B3TestCase):
+class Test_getConfPath(B3TestCase, unittest.TestCase):
 
     def test_getConfPath(self):
         self.console.config.fileName = "/some/where/conf/b3.xml"

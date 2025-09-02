@@ -37,7 +37,7 @@ log = logging.getLogger("test")
 log.setLevel(logging.INFO)
 
 
-class CodTestCase(B3SimpleTestCase):
+class CodTestCase(unittest.TestCase):
     """
     Test case that is suitable for testing Cod parser specific features
     """
@@ -50,7 +50,13 @@ class CodTestCase(B3SimpleTestCase):
         # Now parser inheritance hierarchy is :
         # CodParser -> AbstractParser -> FakeConsole -> Parser
 
-        logging.getLogger('output').setLevel(logging.ERROR)
+        logging.getLogger('output').setLevel(logging.DEBUG)
+
+    def assertDictContainsSubset(self, test, target):
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
     def setUp(self):
         self.parser_conf = XmlConfigParser()

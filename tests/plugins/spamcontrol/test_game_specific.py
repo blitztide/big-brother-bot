@@ -24,6 +24,7 @@
 
 from __future__ import absolute_import
 import b3
+import types
 
 from mock import Mock
 from mockito import when
@@ -51,7 +52,7 @@ class Test_game_specific_spam(SpamcontrolTestCase):
             new_event = Event(type=event.type, client=event.client, target=event.target, data=event.data['text'])
             this.onChat(new_event)
 
-        self.p.onRadio = onRadio
+        self.p.onRadio = types.MethodType(onRadio, self.p)
         self.p.registerEvent('EVT_CLIENT_RADIO', self.p.onRadio)
 
         # patch joe to make him able to send radio messages

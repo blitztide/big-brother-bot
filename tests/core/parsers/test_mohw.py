@@ -144,6 +144,8 @@ class Test_events(MohwTestCase):
     def test_cmd_rotateMap_generate_EVT_GAME_ROUND_END(self):
         # GIVEN
         when(self.parser).write(('mapList.getMapIndices', )).thenReturn([0, 1])
+        when(self.parser).write(('mapList.setNextMapIndex', 1)).thenReturn()
+        when(self.parser).write(('mapList.runNextRound',)).thenReturn()
         when(self.parser).getFullMapRotationList().thenReturn(
             NewMapListBlock(['4', 'CustomPL', '3', 'MP_03', 'CombatMission', '1', 'MP_05', 'BombSquad', '1', 'MP_10',
                              'Sport', '4', 'MP_013', 'SectorControl', '4']))
@@ -293,7 +295,7 @@ class Test_getMapsSoundingLike(MohwTestCase):
         self.assertEqual('MP_21', self.parser.getMapsSoundingLike('compound'))
 
     def test_suggestions(self):
-        self.assertEqual(['shogore valley', 'sarajevo stadium', 'tungunan jungle'], self.parser.getMapsSoundingLike(''))
+        self.assertEqual(['al fara cliffside', 'basilan aftermath', 'chitrail compound'], self.parser.getMapsSoundingLike(''))
 
 
 class Test_getGamemodeSoundingLike(MohwTestCase):
@@ -354,7 +356,7 @@ class Test_getGamemodeSoundingLike(MohwTestCase):
 
     def test_suggestions(self):
         # unrecognizable input, falling back on available gamemodes for current map
-        self.assertEqual(['Team Death Match', 'Combat Mission', 'Home Run'],
+        self.assertEqual(['Combat Mission', 'Home Run', 'Sector Control'],
                          self.parser.getGamemodeSoundingLike('MP_12', ''))
 
 

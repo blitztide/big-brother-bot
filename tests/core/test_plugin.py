@@ -39,12 +39,24 @@ from b3.config import CfgConfigParser
 from b3.plugin import Plugin
 from b3.events import Event
 from tests import B3TestCase
+import unittest
 from tests.plugins.fakeplugins import __file__ as external_plugins__file__
 from textwrap import dedent
 
 external_plugins_dir = os.path.dirname(external_plugins__file__)
 testplugin_config_file = os.path.join(external_plugins_dir, "testplugin/conf/plugin_testplugin.ini")
 
+def load_plugin(name, fake_dir=None):
+        if fake_dir:
+            spec = importlib.util.spec_from_file_location(name, os.path.join(b3.getB3Path(True), "..", "tests", "plugins", "fakeplugins", f"{name}.py"))
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            return mod
+        else:
+            spec = importlib.util.spec_from_file_location(name, os.path.join(b3.getB3Path(True), f'plugins/{name}/__init__.py'))
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            return mod
 
 class MyPlugin(Plugin):
 
@@ -70,7 +82,7 @@ class MyPlugin(Plugin):
         logging.debug("onEvent called")
 
 
-class Test_Plugin_getMessage(B3TestCase):
+class Test_Plugin_getMessage(B3TestCase, unittest.TestCase):
     
     def setUp(self):
         B3TestCase.setUp(self)
@@ -189,7 +201,7 @@ f00: bar -%(param1)s- bar
                                    'bar -%(param1)s- bar', ({'param_foo': 'foo'},), ANY)], error_mock.mock_calls)
 
 
-class Test_Plugin_registerEvent(B3TestCase):
+class Test_Plugin_registerEvent(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)
@@ -388,7 +400,7 @@ class Test_Plugin_registerEvent(B3TestCase):
         self.assertEqual(0, p.stub_method2_call_count)
 
 
-class Test_Plugin_requiresParser(B3TestCase):
+class Test_Plugin_requiresParser(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)
@@ -399,20 +411,9 @@ class Test_Plugin_requiresParser(B3TestCase):
             {'name': 'admin', 'conf': '@b3/conf/plugin_admin.ini', 'path': None, 'disabled': False},
         ]
 
-        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin1', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule1 = importlib.load_module('testplugin1', fp, pathname, description)
-        if fp:
-            fp.close()
-
-        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin2', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule2 = importlib.load_module('testplugin2', fp, pathname, description)
-        if fp:
-            fp.close()
-
-        fp, pathname, description = importlib.machinery.PathFinder().find_spec('admin', [os.path.join(b3.getB3Path(True), 'plugins')])
-        adminModule = importlib.load_module('admin', fp, pathname, description)
-        if fp:
-            fp.close()
+        pluginModule1 = load_plugin('testplugin1', fake_dir=True)
+        pluginModule2 = load_plugin('testplugin2', fake_dir=True)
+        adminModule = load_plugin('admin')
 
         when(self.console.config).get_plugins().thenReturn(self.plugin_list)
         when(self.console).pluginImport('admin', ANY).thenReturn(adminModule)
@@ -442,7 +443,7 @@ class Test_Plugin_requiresParser(B3TestCase):
         self.assertListEqual([call('Could not load plugin testplugin2', exc_info=ANY)], error_mock.mock_calls)
 
 
-class Test_Plugin_getSetting(B3TestCase):
+class Test_Plugin_getSetting(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)
@@ -509,7 +510,7 @@ class Test_Plugin_getSetting(B3TestCase):
         self.assertEqual(self.p.getSetting('section_foo', 'option_bool3', b3.BOOLEAN, False), False)
         self.assertEqual(self.p.getSetting('section_foo', 'option_bool4', b3.BOOLEAN, True), True)
 
-class Test_Plugin_requiresStorage(B3TestCase):
+class Test_Plugin_requiresStorage(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)
@@ -520,20 +521,10 @@ class Test_Plugin_requiresStorage(B3TestCase):
             {'name': 'admin', 'conf': '@b3/conf/plugin_admin.ini', 'path': None, 'disabled': False},
         ]
 
-        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin1', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule1 = importlib.load_module('testplugin1', fp, pathname, description)
-        if fp:
-            fp.close()
+        pluginModule1 = load_plugin('testplugin1', fake_dir=True)
+        pluginModule3 = load_plugin('testplugin3', fake_dir=True)
+        adminModule = load_plugin('admin')
 
-        fp, pathname, description = importlib.machinery.PathFinder().find_spec('testplugin3', [os.path.join(b3.getB3Path(True), '..', 'tests', 'plugins', 'fakeplugins')])
-        pluginModule3 = importlib.load_module('testplugin3', fp, pathname, description)
-        if fp:
-            fp.close()
-
-        fp, pathname, description = importlib.machinery.PathFinder().find_spec('admin', [os.path.join(b3.getB3Path(True), 'plugins')])
-        adminModule = importlib.load_module('admin', fp, pathname, description)
-        if fp:
-            fp.close()
 
         when(self.console.config).get_plugins().thenReturn(self.plugin_list)
         when(self.console).pluginImport('admin', ANY).thenReturn(adminModule)

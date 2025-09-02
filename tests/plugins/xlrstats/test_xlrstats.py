@@ -51,7 +51,7 @@ LOGGER = logging.getLogger('output')
 LOGGER.setLevel(logging.DEBUG)
 
 
-class XlrstatsTestCase(B3TestCase):
+class XlrstatsTestCase(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         """

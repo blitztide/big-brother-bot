@@ -32,6 +32,7 @@ import b3.plugins.admin
 import b3.events
 import os
 import re
+import types
 
 from six.moves.configparser import ConfigParser
 from six.moves.configparser import NoOptionError
@@ -647,4 +648,4 @@ def patch_admin_module(adminPlugin):
 
     # patch all the Command objects already instantiated
     for key in adminPlugin._commands:
-        adminPlugin._commands[key].canUse = new_canUse
+        adminPlugin._commands[key].canUse = types.MethodType(new_canUse, adminPlugin._commands[key])

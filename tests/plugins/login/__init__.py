@@ -36,7 +36,7 @@ from b3.config import CfgConfigParser
 F00_MD5 = '9f06f2538cdbb40bce9973f60506de09'
 
 
-class LoginTestCase(B3TestCase):
+class LoginTestCase(B3TestCase, unittest.TestCase):
     """
     Ease testcases that need an working B3 console and need to control the censor plugin config.
     """

@@ -39,11 +39,16 @@ class DummyParser(Parser):
         self.log = logging.getLogger("output")
 
 
-class Test_getMessage(B3SimpleTestCase):
+class Test_getMessage(unittest.TestCase):
 
     def setUp(self):
         self.parser = DummyParser()
         self.parser._messages = {}
+    def assertDictContainsSubset(self, test, target):
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
     def test_unknown_msg__falls_back_on_default(self):
         self.parser._messages = {}
@@ -76,10 +81,16 @@ class Test_getMessage(B3SimpleTestCase):
 
 
 
-class Test_getMessageVariables(B3SimpleTestCase):
+class Test_getMessageVariables(unittest.TestCase):
 
     def setUp(self):
         self.parser = DummyParser()
+
+    def assertDictContainsSubset(self, test, target):
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
     def test_with_parameters(self):
         client = Client(name="Jack")
@@ -95,10 +106,15 @@ class Test_getMessageVariables(B3SimpleTestCase):
         self.assertDictContainsSubset(self.parser.getMessageVariables(client=client, reason="this is a good reason"), {'clientname':client.name, 'reason': 'this is a good reason'})
 
 
-class Test_getWrap(B3SimpleTestCase):
+class Test_getWrap(unittest.TestCase):
 
     def setUp(self):
         self.parser = DummyParser()
+    def assertDictContainsSubset(self, test, target):
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
     def test_wrapped_initialized(self):
         self.parser._use_color_codes = False

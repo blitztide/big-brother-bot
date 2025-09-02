@@ -757,11 +757,16 @@ class CsgoParser(Parser):
         """
         Parse a single line from the log file.
         """
+        # Ensure is str type
+        print(type(line))
+        if isinstance(line, bytes):
+            print("CONVERTING")
+            line = line.decode()
         if line is None:
             return
         if line.startswith("mp\x08 \x08\x08 \x08"):
             line = line[8:]
-        m = re.match(RE_HL_LOG_LINE, line.decode('UTF-8', 'replace'))
+        m = re.match(RE_HL_LOG_LINE, line)
         if m:
             data = m.group('data')
             if data:

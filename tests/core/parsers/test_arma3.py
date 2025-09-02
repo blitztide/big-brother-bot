@@ -38,7 +38,7 @@ from tests import B3SimpleTestCase
 ANY = object()
 
 
-class Arma3TestCase(B3SimpleTestCase):
+class Arma3TestCase(unittest.TestCase):
     """
     Test case that is suitable for testing Arma3 parser specific features
     """

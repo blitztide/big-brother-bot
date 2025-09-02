@@ -34,6 +34,7 @@ import sys
 import traceback
 import time
 import string
+import types
 import six.moves.queue
 import threading
 import b3.clients
@@ -1454,7 +1455,7 @@ class AbstractParser(b3.parser.Parser):
             return supportedEasyNames[matches[0]]
         else:
             # multiple matches, provide human friendly suggestions
-            return matches[:3]
+            return sorted(matches[:3])
 
     def getGamemodeSoundingLike(self,  map_id, gamemode_name):
         """
@@ -1642,6 +1643,7 @@ class AbstractParser(b3.parser.Parser):
             Expecting one, two or three parameters separated by a comma.
             <map> [, gamemode [, num of rounds]]
             """
+            print(f"ParseMap {this} {data} {client}")
             gamemode_data = num_rounds = None
             if ',' in data:
                 parts = [x.strip() for x in data.split(',')]
@@ -1703,8 +1705,6 @@ class AbstractParser(b3.parser.Parser):
             if not data:
                 client.message('invalid parameters, try !help map')
                 return
-
-
             parsed_data = this.parse_map_parameters(data, client)
             if not parsed_data:
                 return
@@ -1735,9 +1735,9 @@ class AbstractParser(b3.parser.Parser):
                     return
 
         adminplugin = self.getPlugin('admin')
-        adminplugin.parse_map_parameters = parse_map_parameters
+        adminplugin.parse_map_parameters = types.MethodType(parse_map_parameters, adminplugin)
         command = adminplugin._commands['map']
-        command.func = new_cmd_map
+        command.func = types.MethodType(new_cmd_map, adminplugin)
         command.help = new_cmd_map.__doc__.strip()
 
 

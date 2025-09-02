@@ -34,6 +34,7 @@ from b3.fake import FakeClient
 import pytest
 pytest.importorskip("b3.parsers.csgo",exc_type=NameError)
 from b3.parsers.csgo import CsgoParser
+from tests import B3SimpleTestCase
 import six
 from six.moves import filter
 from six.moves import map
@@ -112,6 +113,11 @@ class CsgoTestCase(unittest.TestCase):
         self.queueEvent_mock = self.queueEvent_patcher.start()
 
         self.parser.startup()
+    def assertDictContainsSubset(self, test, target):
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
 
     def tearDown(self):

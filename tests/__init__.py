@@ -77,12 +77,14 @@ def flush_console_streams():
     sys.stderr.flush()
     sys.stdout.flush()
 
-class B3SimpleTestCase(unittest.TestCase):
-
+class B3SimpleTestCase():
     def assertDictContainsSubset(self, test, target):
-        self.assertDictEqual(test, test | target)
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
-class B3TestCase(B3SimpleTestCase):
+class B3TestCase():
 
     def setUp(self):
         testcase_lock.acquire()

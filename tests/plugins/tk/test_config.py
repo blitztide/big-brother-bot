@@ -398,7 +398,7 @@ class Test_get_config_for_levels(Test_Tk_plugin):
         ], self.error_mock.mock_calls)
 
 
-class Test_Tk_default_config(B3TestCase):
+class Test_Tk_default_config(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         super(Test_Tk_default_config, self).setUp()

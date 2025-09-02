@@ -35,7 +35,7 @@ from tests import B3TestCase
 DEFAULT_XLRSTATS_CONFIG_FILE = os.path.join(os.path.dirname(b3_module__file__), 'conf', 'plugin_xlrstats.ini')
 
 
-class XlrstatsTestCase(B3TestCase):
+class XlrstatsTestCase(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         """

@@ -27,7 +27,7 @@ from tests import B3TestCase
 from b3.plugins.ftpytail import FtpytailPlugin
 
 
-class FtpytailPluginTestCase(B3TestCase):
+class FtpytailPluginTestCase(B3TestCase, unittest.TestCase):
 
     def test_load_plugin(self):
         p = FtpytailPlugin(self.console)

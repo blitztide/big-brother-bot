@@ -207,13 +207,13 @@ class SourceLogParser(object):
 class SourceLogListenerError(Exception):
     pass
 
-class SourceLogListener(asyncore.dispatcher):
+class SourceLogListener():
     def __init__(self, local, remote, parser):
-        asyncore.dispatcher.__init__(self)
         self.parser = parser
-        self.create_socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.bind(local)
-        self.connect(remote)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.socket.bind(local)
+        self.socket.connect(remote)
+        self.loop = assyncio.get_event_loop()
 
     def handle_connect(self):
         pass

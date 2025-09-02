@@ -37,7 +37,7 @@ except ImportError:
 from b3.plugins.sftpytail import SftpytailPlugin
 
 
-class Test_Sftpytail_plugin(B3TestCase):
+class Test_Sftpytail_plugin(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         super(Test_Sftpytail_plugin, self).setUp()

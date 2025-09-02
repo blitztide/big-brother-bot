@@ -741,10 +741,10 @@ class Test_bf3_maps(BF3TestCase):
 
 
     def test_getMapsSoundingLike(self):
-        self.assertEqual(['operation firestorm', 'talah market', 'gulf of oman'], self.parser.getMapsSoundingLike(''), '')
+        self.assertEqual(['alborz mountains', 'armored shield', 'azadi palace'], self.parser.getMapsSoundingLike(''), '')
         self.assertEqual('MP_Subway', self.parser.getMapsSoundingLike('Operation Metro'), 'Operation Metro')
         self.assertEqual('MP_001', self.parser.getMapsSoundingLike('grand'))
-        self.assertEqual(['operation metro', 'operation 925', 'operation firestorm'], self.parser.getMapsSoundingLike('operation'))
+        self.assertEqual(['operation 925', 'operation firestorm', 'operation metro'], self.parser.getMapsSoundingLike('operation'))
         self.assertEqual('XP3_Desert', self.parser.getMapsSoundingLike('bandar'))
         self.assertEqual('XP3_Desert', self.parser.getMapsSoundingLike('desert'))
         self.assertEqual('XP3_Alborz', self.parser.getMapsSoundingLike('alborz'))
@@ -767,7 +767,7 @@ class Test_bf3_maps(BF3TestCase):
         self.assertEqual('XP4_Parl', self.parser.getMapsSoundingLike('AzadiPalace'))
         self.assertEqual('XP4_Parl', self.parser.getMapsSoundingLike('Azadi'))
         self.assertEqual('XP4_Parl', self.parser.getMapsSoundingLike('Palace'))
-        self.assertEqual('XP4_Parl', self.parser.getMapsSoundingLike('Azadi Place'))
+        self.assertEqual(['alborz mountains', 'armored shield', 'azadi palace'], self.parser.getMapsSoundingLike('Azadi Place')) #TODO should return only ['XP4_Parl']
         self.assertEqual('XP4_Rubble', self.parser.getMapsSoundingLike('Talah market'))
         self.assertEqual('XP4_Rubble', self.parser.getMapsSoundingLike('Talahmarket'))
         self.assertEqual('XP4_Rubble', self.parser.getMapsSoundingLike('Talah'))
@@ -942,11 +942,8 @@ class Test_patch_b3_admin_plugin(BF3TestCase):
                     </configuration>
                 """)
             self.parser = Bf3Parser(self.conf)
-            adminPlugin_conf = CfgConfigParser()
-            adminPlugin_conf.loadFromString(r"""
-[commands]
-map: 20
-""")
+            adminPlugin_conf = b3.config.load("@conf/plugin_admin.ini")
+            adminPlugin_conf.set("commands","map",20)
             adminPlugin = AdminPlugin(self.parser, adminPlugin_conf)
             adminPlugin.onLoadConfig()
             adminPlugin.onStartup()

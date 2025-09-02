@@ -27,7 +27,7 @@ from b3.plugins.stats import StatsPlugin
 from b3.config import CfgConfigParser
 
 
-class StatPluginTestCase(B3TestCase):
+class StatPluginTestCase(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)

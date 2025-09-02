@@ -285,7 +285,7 @@ class Plugin(object):
 
         def _get_list(value):
             """process the given value by extracting tokens"""
-            return [x for x in re.split('\W+', value) if x]
+            return [x for x in re.split('\\W+', value) if x]
 
         handlers = {
             b3.STRING: _get_string,
@@ -304,7 +304,7 @@ class Plugin(object):
             return default
 
         try:
-            val = self.config.get(section, option, value_type == b3.TEMPLATE)
+            val = self.config.get(section, option)
         except b3.config.NoOptionError:
             self.warning('could not find %s::%s in configuration file, using default : %s', section, option, default)
             val = default

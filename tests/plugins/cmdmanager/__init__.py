@@ -31,7 +31,7 @@ from b3.config import CfgConfigParser
 from tests import B3TestCase
 
 
-class Cmdmanager_TestCase(B3TestCase):
+class Cmdmanager_TestCase(B3TestCase, unittest.TestCase):
 
     def setUp(self):
 

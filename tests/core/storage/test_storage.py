@@ -55,7 +55,7 @@ except ImportError:
     is_postgresql_ready = False
     no_postgresql_reason = "no psycopg2 module available"
 
-class Test_Storage(B3TestCase):
+class Test_Storage(B3TestCase, unittest.TestCase):
 
     storage = None
 

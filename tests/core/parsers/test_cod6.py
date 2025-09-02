@@ -31,6 +31,7 @@ from b3.clients import Client
 from b3.config import XmlConfigParser
 from b3.parsers.cod6 import Cod6Parser
 import six
+from tests import B3SimpleTestCase
 from six.moves import map
 
 log = logging.getLogger("test")
@@ -80,6 +81,12 @@ class Cod6TestCase(unittest.TestCase):
         self.console.write = Mock(wraps=write)
 
         self.player = self.console.clients.newClient(cid="4", guid="theGuid", name="theName", ip="11.22.33.44")
+
+    def assertDictContainsSubset(self, test, target):
+        if len(test.keys()) > len(target.keys()):
+            self.assertDictEqual(test, test | target)
+        else:
+            self.assertDictEqual(target, target | test)
 
 
     def tearDown(self):

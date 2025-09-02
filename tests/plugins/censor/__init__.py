@@ -34,7 +34,7 @@ from b3.plugins.censor import CensorPlugin
 from b3.config import XmlConfigParser
 
 
-class CensorTestCase(B3TestCase):
+class CensorTestCase(B3TestCase, unittest.TestCase):
     """
     Ease testcases that need an working B3 console and need to control the censor plugin config
     """

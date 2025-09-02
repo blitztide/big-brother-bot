@@ -24,7 +24,7 @@ from b3.plugins.spamcontrol import SpamcontrolPlugin
 from tests import B3TestCase
 
 
-class SpamcontrolTestCase(B3TestCase):
+class SpamcontrolTestCase(B3TestCase, unittest.TestCase):
     """
     Ease testcases that need an working B3 console and need to control the Spamcontrol plugin config
     """

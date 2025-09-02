@@ -208,7 +208,7 @@ class Test_Crontab_getRate(unittest.TestCase):
         self.assertRaises(TypeError, self.t, ('5-12/2, -5, 40-42'))
 
 
-class Test_Cron(B3TestCase):
+class Test_Cron(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         B3TestCase.setUp(self)

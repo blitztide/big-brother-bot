@@ -33,7 +33,7 @@ from b3.plugins.geolocation import GeolocationPlugin
 from tests import B3TestCase
 
 
-class GeolocationTestCase(B3TestCase):
+class GeolocationTestCase(B3TestCase, unittest.TestCase):
 
     def setUp(self):
         self.log = logging.getLogger('output')

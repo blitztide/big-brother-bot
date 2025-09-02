@@ -1625,9 +1625,12 @@ class Clients(dict):
         Empty the clients list and reset the indexes.
         """
         self.resetIndex()
+        del_items = []
         for cid, c in self.items():
             if not c.hide:
-                del self[cid]
+                del_items.append(self[cid])
+        for item in del_items:
+            del item
 
     def sync(self):
         """

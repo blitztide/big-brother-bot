@@ -85,7 +85,7 @@ class Test_misc_cmd(Admin_TestCase):
         assert mock_client.message.called
 
     def test_maps(self):
-        mock_client = Mock(spec=Client, name="client")
+        mock_client = Mock(spec=Client, name="client", maxLevel=100)
         mock_cmd = Mock(spec=Command)
 
         # None

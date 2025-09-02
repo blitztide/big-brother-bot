@@ -45,7 +45,7 @@ from b3.clients import Client
 from b3.clients import Group
 from b3.functions import minutesStr
 from b3.functions import getCmd
-from six.moves.configparser import NoOptionError
+from configparser import NoOptionError
 
 # pylint: disable-msg=E1103
 class AdminPlugin(b3.plugin.Plugin):
@@ -236,7 +236,7 @@ class AdminPlugin(b3.plugin.Plugin):
             if not '%s' in msg:
                 raise ValueError("message regme_confirmation must have a placeholder '%%s' for the group name")
             self._messages['regme_confirmation'] = msg
-        except NoOptionError:
+        except NoOptionError as e:
             self.warning('could not find messages/regme_confirmation in config file, '
                          'using default: %s' % self._messages['regme_confirmation'])
         except ValueError as e:
@@ -253,7 +253,8 @@ class AdminPlugin(b3.plugin.Plugin):
                 raise ValueError("can't be less than 0")
             self.warn_delay = raw_data
             self.debug('loaded warn/warn_delay: %s' % self.warn_delay)
-        except NoOptionError:
+        except NoOptionError as e:
+            self.debug(e)
             self.warning('could not find warn/warn_delay in config file, '
                          'using default: %s' % self.warn_delay)
         except ValueError as e:
@@ -704,6 +705,7 @@ class AdminPlugin(b3.plugin.Plugin):
             if command.canUse(event.client):
 
                 try:
+                    self.debug(f"Can Use  {command}")
                     if event.data[:1] == self.cmdPrefixLoud and event.client.maxLevel >= 9:
                         results = command.executeLoud(data, event.client)
                     elif event.data[:1] == self.cmdPrefixBig and event.client.maxLevel >= 9:
@@ -827,6 +829,8 @@ class AdminPlugin(b3.plugin.Plugin):
         req: set to True if parameters is required.
         Return None if could cmd is not in the expected format
         """
+        if not cmd:
+            return None
         m = re.match(self._parseUserCmdRE, cmd)
 
         if m:
@@ -2244,7 +2248,7 @@ class AdminPlugin(b3.plugin.Plugin):
         """
         [player] <message> - spam a predefined message to all players or a given player
         """
-        m = re.match('^((?P<player>\w+)\s+)?(?P<keyword>\w{2,})$', data)
+        m = re.match('^((?P<player>\\w+)\\s+)?(?P<keyword>\\w{2,})$', data)
         if not m:
             client.message(self.getMessage('invalid_parameters'))
         else:
@@ -2309,7 +2313,7 @@ class AdminPlugin(b3.plugin.Plugin):
             return
 
         cid = m[0]
-        m = re.match('^([0-9]+[dwhsm]*)(?:\s(.+))?$', m[1], re.I)
+        m = re.match('^([0-9]+[dwhsm]*)(?:\\s(.+))?$', m[1], re.I)
         if not m:
             client.message(self.getMessage('invalid_parameters'))
             return

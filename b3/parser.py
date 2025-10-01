@@ -128,6 +128,7 @@ class Parser(object):
     type = None
     working = True  # whether B3 is running or not
     wrapper = None  # textwrapper instance
+    is_dummy = False # Allows the use of a dummy instance ( No game attached )
 
     deadPrefix = '[DEAD]^7'  # say dead prefix
     msgPrefix = ''  # say prefix
@@ -372,61 +373,61 @@ class Parser(object):
                 self.screen.write(">>> Cannot read file: %s\n" % os.path.abspath(f))
                 self.screen.flush()
                 self.critical("Cannot read file: %s", os.path.abspath(f))
-
-        try:
-            # setup rcon
-            self.output = self.OutputClass(self, (self._rconIp, self._rconPort), self._rconPassword)
-        except Exception as err:
-            self.screen.write(">>> Cannot setup RCON: %s\n" % err)
-            self.screen.flush()
-            self.critical("Cannot setup RCON: %s" % err, exc_info=err)
-        
-        if self.config.has_option('server', 'rcon_timeout'):
-            custom_socket_timeout = self.config.getfloat('server', 'rcon_timeout')
-            self.output.socket_timeout = custom_socket_timeout
-            self.bot('Setting rcon socket timeout to: %0.3f sec', custom_socket_timeout)
-
-        # allow configurable max line length
-        if self.config.has_option('server', 'max_line_length'):
-            self._line_length = self.config.getint('server', 'max_line_length')
-            self.bot('Setting line_length to: %s', self._line_length)
-
-        # allow configurable line color prefix
-        if self.config.has_option('server', 'line_color_prefix'):
-            self._line_color_prefix = self.config.get('server', 'line_color_prefix')
-            self.bot('Setting line_color_prefix to: "%s"', self._line_color_prefix)
-
-        # allow configurable multiline (manual line breaks)
-        if self.config.has_option('server', 'multiline'):
-            self._multiline = self.config.getboolean('server', 'multiline')
-            self.bot('Setting multiline to: %s', self._multiline)
-
-        # allow configurable multiline (manual line breaks)
-        if self.config.has_option('server', 'multiline_noprefix'):
-            self._multiline_noprefix = self.config.getboolean('server', 'multiline_noprefix')
-            self.bot('Setting multiline_noprefix to: %s', self._multiline_noprefix)
-
-        # testing rcon
-        if self.rconTest:
-            res = self.output.write('status')
-            self.output.flush()
-            self.screen.write('Testing RCON     : ')
-            self.screen.flush()
-            badRconReplies = ['Bad rconpassword.', 'Invalid password.']
-            if res in badRconReplies:
-                self.screen.write('>>> Oops: Bad RCON password\n'
-                                  '>>> Hint: This will lead to errors and render B3 without any power to interact!\n')
+        if not self.is_dummy:
+            try:
+                # setup rcon
+                self.output = self.OutputClass(self, (self._rconIp, self._rconPort), self._rconPassword)
+            except Exception as err:
+                self.screen.write(">>> Cannot setup RCON: %s\n" % err)
                 self.screen.flush()
-                time.sleep(2)
-            elif res == '':
-                self.screen.write('>>> Oops: No response\n'
-                                  '>>> Could be something wrong with the rcon connection to the server!\n'
-                                  '>>> Hint 1: The server is not running or it is changing maps.\n'
-                                  '>>> Hint 2: Check your server-ip and port.\n')
+                self.critical("Cannot setup RCON: %s" % err, exc_info=err)
+
+            if self.config.has_option('server', 'rcon_timeout'):
+                custom_socket_timeout = self.config.getfloat('server', 'rcon_timeout')
+                self.output.socket_timeout = custom_socket_timeout
+                self.bot('Setting rcon socket timeout to: %0.3f sec', custom_socket_timeout)
+
+            # allow configurable max line length
+            if self.config.has_option('server', 'max_line_length'):
+                self._line_length = self.config.getint('server', 'max_line_length')
+                self.bot('Setting line_length to: %s', self._line_length)
+
+            # allow configurable line color prefix
+            if self.config.has_option('server', 'line_color_prefix'):
+                self._line_color_prefix = self.config.get('server', 'line_color_prefix')
+                self.bot('Setting line_color_prefix to: "%s"', self._line_color_prefix)
+
+            # allow configurable multiline (manual line breaks)
+            if self.config.has_option('server', 'multiline'):
+                self._multiline = self.config.getboolean('server', 'multiline')
+                self.bot('Setting multiline to: %s', self._multiline)
+
+            # allow configurable multiline (manual line breaks)
+            if self.config.has_option('server', 'multiline_noprefix'):
+                self._multiline_noprefix = self.config.getboolean('server', 'multiline_noprefix')
+                self.bot('Setting multiline_noprefix to: %s', self._multiline_noprefix)
+
+            # testing rcon
+            if self.rconTest:
+                res = self.output.write('status')
+                self.output.flush()
+                self.screen.write('Testing RCON     : ')
                 self.screen.flush()
-                time.sleep(2)
-            else:
-                self.screen.write('OK\n')
+                badRconReplies = ['Bad rconpassword.', 'Invalid password.']
+                if res in badRconReplies:
+                    self.screen.write('>>> Oops: Bad RCON password\n'
+                                    '>>> Hint: This will lead to errors and render B3 without any power to interact!\n')
+                    self.screen.flush()
+                    time.sleep(2)
+                elif res == '':
+                    self.screen.write('>>> Oops: No response\n'
+                                    '>>> Could be something wrong with the rcon connection to the server!\n'
+                                    '>>> Hint 1: The server is not running or it is changing maps.\n'
+                                    '>>> Hint 2: Check your server-ip and port.\n')
+                    self.screen.flush()
+                    time.sleep(2)
+                else:
+                    self.screen.write('OK\n')
 
         self.loadEvents()
         self.screen.write('Loading events   : %s events loaded\n' % len(self._events))

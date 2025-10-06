@@ -16,3 +16,4 @@ dist
 releases/*
 b3/docs/user_documentation/_build/*
 *.py.bak
+*.xml

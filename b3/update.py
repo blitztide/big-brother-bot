@@ -39,7 +39,7 @@ from six.moves import map
 from six.moves import input
 
 ## url from where we can get the latest B3 version number
-URL_B3_LATEST_VERSION = 'http://master.bigbrotherbot.net/version.json'
+URL_B3_LATEST_VERSION = 'https://api.github.com/repos/BigBrotherBot/big-brother-bot/releases'
 
 ## supported update channels
 UPDATE_CHANNEL_STABLE = 'stable'
@@ -61,6 +61,7 @@ class B3version(Version):
         1.0b1
         1.0b3
         1.9.0dev7.daily21-20121004
+        1.10.1
     And make sure that any 'dev' prerelease is inferior to any 'alpha' prerelease
     """
     version = None
@@ -190,6 +191,33 @@ $''', re.VERBOSE)
     elif m.group('tag').lower() == 'b':
         return UPDATE_CHANNEL_BETA
 
+def getChannelFromTag(tag):
+    version_re = re.compile(r'''^
+(?P<major>\d+)\.(?P<minor>\d+)   # 1.2
+(?:\. (?P<patch>\d+))?           # 1.2.45
+(?P<prerelease>                  # 1.2.45b2
+  (?P<tag>a|b|dev)
+  (?P<tag_num>\d+)?
+)?
+(?P<daily>                       # 1.2.45b2.daily4-20120901
+    \.daily(?P<build_num>\d+?)
+    (?:-20\d\d\d\d\d\d)?
+)?
+$''', re.VERBOSE)
+
+    m = version_re.match(tag)
+    if not m or m.group('tag') is None:
+        return UPDATE_CHANNEL_STABLE
+    elif m.group('tag').lower() in ('dev', 'a'):
+        return UPDATE_CHANNEL_DEV
+    elif m.group('tag').lower() == 'b':
+        return UPDATE_CHANNEL_BETA
+
+def getLatestInChannel(releases_json, channel):
+    for release in releases_json:
+        if channel == getChannelFromTag(release["tag_name"]):
+            return release
+
 
 def checkUpdate(currentVersion, channel=None, singleLine=True, showErrormsg=False, timeout=4):
     """
@@ -197,16 +225,15 @@ def checkUpdate(currentVersion, channel=None, singleLine=True, showErrormsg=Fals
     """
     if channel is None:
         channel = getDefaultChannel(currentVersion)
-
     if not singleLine:
-        sys.stdout.write("checking for updates... \n")
+        sys.stdout.write(f"checking for updates in {channel}... \n")
 
     message = None
     errormessage = None
     
     try:
         json_data = six.moves.urllib.request.urlopen(URL_B3_LATEST_VERSION, timeout=timeout).read()
-        version_info = json.loads(json_data)
+        release_info = json.loads(json_data)
     except IOError as e:
         if hasattr(e, 'reason'):
             errormessage = '%s' % e.reason
@@ -217,46 +244,42 @@ def checkUpdate(currentVersion, channel=None, singleLine=True, showErrormsg=Fals
     except Exception as e:
         errormessage = repr(e)
     else:
-        latestVersion = None
-        try:
-            channels = version_info['B3']['channels']
-        except KeyError as err:
-            errormessage = repr(err) + '. %s' % version_info
+        # Check github releases
+        latestVersion = None # Dict from release API
+        # Repo data is ordered from latest to oldest
+        if channel not in (UPDATE_CHANNEL_STABLE, UPDATE_CHANNEL_BETA, UPDATE_CHANNEL_DEV):
+            errormessage = "unknown channel '%s': expecting (%s)"  % (channel, ', '.join(list(channels.keys())))
         else:
-            if channel not in channels:
-                errormessage = "unknown channel '%s': expecting (%s)"  % (channel, ', '.join(list(channels.keys())))
-            else:
-                try:
-                    latestVersion = channels[channel]['latest-version']
-                except KeyError as err:
-                    errormessage = repr(err) + '. %s' % version_info
+            latestVersion = getLatestInChannel(release_info, channel)
+            if not latestVersion:
+                errormessage = "No Channel update available"
 
         if not errormessage:
             try:
-                latestUrl = version_info['B3']['channels'][channel]['url']
+                latestUrl = latestVersion['html_url']
             except KeyError:
-                latestUrl = "www.bigbrotherbot.net"
+                latestUrl = "https://github.com/BigBrotherBot/big-brother-bot/releases"
 
-            not singleLine and sys.stdout.write('latest B3 %s version is %s\n' % (channel, latestVersion))
-            _lver = B3version(latestVersion)
+            not singleLine and sys.stdout.write('latest B3 %s version is %s\n' % (channel, latestVersion["tag_name"]))
+            _lver = B3version(latestVersion["tag_name"])
             _cver = B3version(currentVersion)
             if _cver < _lver:
                 if singleLine:
-                    message = 'update available (v%s : %s)' % (latestVersion, latestUrl)
+                    message = 'update available (%s : %s)' % (latestVersion["tag_name"], latestUrl)
                 else:
                     message = """
-                 _\\|/_
-                 (o o)    {version:^21}
-         +----oOO---OOo-----------------------+
-         |                                    |
-         |                                    |
-         | A newer version of B3 is available |
-         |                                    |
-         | {url:^34} |
-         |                                    |
-         +------------------------------------+
+                         _\\|/_
+                         (o o)    {version:^21}
+         +-------------oOO---OOo------------------------------------------------------+
+         |                                                                            |
+         |                                                                            |
+         |               A newer version of B3 is available                           |
+         |                                                                            |
+         |     {url:^68}   |
+         |                                                                            |
+         +----------------------------------------------------------------------------+
 
-        """.format(version=latestVersion, url=latestUrl)
+        """.format(version=latestVersion["tag_name"], url=latestUrl)
 
     if errormessage and showErrormsg:
         return errormessage

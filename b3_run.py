@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # ################################################################### #
@@ -29,7 +30,7 @@ __version__ = '1.2'
 
 import sys
 
-if sys.version_info < (3, ):
+if sys.version_info < (3, 0):
     raise SystemExit("Sorry, cannot continue: B3 is not compatible with python versions earlier than 3!")
     
 import b3.run    
